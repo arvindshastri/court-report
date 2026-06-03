@@ -24,7 +24,9 @@ DIGEST_SYSTEM_PROMPT = (
     "One sentence. The one game worth watching tonight based on the series context, recent form, "
     "or rivalry. Include tip-off time if available.\n\n"
     "Rules: be specific, be concise, do not hallucinate any stats not in the data provided, "
-    "do not use filler phrases like wire-to-wire or dominant performance."
+    "do not use filler phrases like wire-to-wire or dominant performance. "
+    "Where historical context is provided, reference it to make comparisons. "
+    "If a player is performing above or below their historical norm, say so explicitly."
 )
 
 GAME_CARD_SYSTEM_PROMPT = (
@@ -132,6 +134,12 @@ def format_all_games_for_digest(games):
             for p in ps.get("home_players", [])[:5]:
                 lines.append(_format_player_row(p))
 
+        history = game.get("historical_context", [])
+        if history:
+            lines.append("\nHISTORICAL CONTEXT:")
+            for j, doc in enumerate(history, 1):
+                lines.append(f"  [{j}] {doc}")
+
         sections.append("\n".join(lines))
 
     return "\n\n".join(sections)
@@ -155,7 +163,7 @@ def generate_game_card_recap(game):
 
     message = client.messages.create(
         model="claude-haiku-4-5-20251001",
-        max_tokens=150,
+        max_tokens=250,
         system=GAME_CARD_SYSTEM_PROMPT,
         messages=[{"role": "user", "content": prompt_text}],
     )
