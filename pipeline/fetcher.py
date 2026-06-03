@@ -3,21 +3,22 @@ warnings.filterwarnings("ignore")
 
 from dotenv import dotenv_values
 from pathlib import Path
-from nba_api.stats.endpoints import ScoreboardV3
+from nba_api.stats.endpoints import ScoreboardV3, BoxScoreTraditionalV3
 from datetime import date, timedelta
+import time
 
 config = dotenv_values(Path(__file__).parent.parent / ".env")
 
 
 def get_games(game_date=None):
     """
-    Fetch completed WNBA games for a given date string (YYYY-MM-DD).
+    Fetch completed NBA games for a given date string (YYYY-MM-DD).
     If no date is provided, search backwards from yesterday up to 14 days
     until at least one Final game is found.
     Returns (parsed_games, date_str) or ([], None) if nothing found.
     """
     if game_date:
-        scoreboard = ScoreboardV3(game_date=game_date, league_id="10")
+        scoreboard = ScoreboardV3(game_date=game_date, league_id="00")
         games = scoreboard.get_dict()["scoreboard"]["games"]
         return parse_games(games), game_date
 
@@ -25,14 +26,14 @@ def get_games(game_date=None):
         check_date = date.today() - timedelta(days=days_back)
         date_str = check_date.strftime("%Y-%m-%d")
         print(f"  Checking {date_str}...")
-        scoreboard = ScoreboardV3(game_date=date_str, league_id="10")
+        scoreboard = ScoreboardV3(game_date=date_str, league_id="00")
         games = scoreboard.get_dict()["scoreboard"]["games"]
         final_games = [g for g in games if g["gameStatusText"].strip().lower() == "final"]
         if final_games:
             print(f"  Found {len(final_games)} completed game(s) on {date_str}.\n")
             return parse_games(final_games), date_str
 
-    print("  No completed WNBA games found in the last 14 days.")
+    print("  No completed NBA games found in the last 14 days.")
     return [], None
 
 
@@ -123,6 +124,52 @@ def print_games(parsed_games):
     print("=" * 60)
     print(f"  {len(parsed_games)} games on this date.")
     print("=" * 60)
+
+
+def get_player_stats(game_id):
+    """
+    Fetch individual player stats for a given game_id from BoxScoreTraditionalV3.
+    Returns {'home_players': [...], 'away_players': [...]} sorted by points descending.
+    Only includes players who actually played (minutes not None or '0:00').
+    """
+    time.sleep(0.6)
+    box = BoxScoreTraditionalV3(game_id=game_id)
+    data = box.get_dict()["boxScoreTraditional"]
+
+    def parse_players(team_data):
+        players = []
+        for p in team_data.get("players", []):
+            s = p.get("statistics", {})
+            minutes = s.get("minutes")
+            if not minutes or minutes in ("PT00M00.00S", "0:00"):
+                continue
+            players.append({
+                "name":          f"{p.get('firstName', '')} {p.get('familyName', '')}".strip(),
+                "team_tricode":  team_data.get("teamTricode"),
+                "minutes":       minutes,
+                "points":        s.get("points"),
+                "rebounds":      s.get("reboundsTotal"),
+                "assists":       s.get("assists"),
+                "steals":        s.get("steals"),
+                "blocks":        s.get("blocks"),
+                "fg_made":       s.get("fieldGoalsMade"),
+                "fg_attempted":  s.get("fieldGoalsAttempted"),
+                "fg_pct":        s.get("fieldGoalsPercentage"),
+                "fg3_made":      s.get("threePointersMade"),
+                "fg3_attempted": s.get("threePointersAttempted"),
+                "turnovers":     s.get("turnovers"),
+                "ft_made":       s.get("freeThrowsMade"),
+                "ft_attempted":  s.get("freeThrowsAttempted"),
+                "ft_pct":        s.get("freeThrowsPercentage"),
+                "personal_fouls": s.get("foulsPersonal"),
+                "plus_minus":    s.get("plusMinusPoints"),
+            })
+        return sorted(players, key=lambda p: p["points"] or 0, reverse=True)
+
+    return {
+        "home_players": parse_players(data["homeTeam"]),
+        "away_players": parse_players(data["awayTeam"]),
+    }
 
 
 if __name__ == "__main__":

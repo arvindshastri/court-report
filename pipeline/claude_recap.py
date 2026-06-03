@@ -8,14 +8,41 @@ import anthropic
 config = dotenv_values(Path(__file__).parent.parent / ".env")
 client = anthropic.Anthropic(api_key=config["ANTHROPIC_API_KEY"])
 
-SYSTEM_PROMPT = (
-    "You are a WNBA sports analyst writing a morning digest. "
-    "For each game write exactly 3 sentences. "
-    "Sentence 1: how the game unfolded — momentum shifts, turning points, quarter story. "
-    "Sentence 2: the standout performer and why their performance was notable given the context. "
-    "Sentence 3: one thing a casual fan would miss from just reading the final score. "
-    "Be specific, be concise, do not start with the final score, do not hallucinate any stats not provided to you."
+DIGEST_SYSTEM_PROMPT = (
+    "You are Court Report, a sharp NBA morning digest. "
+    "Given last night's box scores, generate a digest with exactly these sections:\n\n"
+    "STORY OF THE NIGHT\n"
+    "Start with one bolded sentence — the single most dramatic moment of the night. "
+    "Then 2 sentences of broader context about how the night unfolded across the league.\n\n"
+    "PLAYER OF THE NIGHT\n"
+    "One player, the most impactful performance considering game context not just points. "
+    "Format: [Name] — [stats line] | [one sentence on why this performance mattered]\n\n"
+    "BY THE NUMBERS\n"
+    "4 bullet points. Each is one standalone stat that needs no explanation to be impressive. "
+    "Mix teams, players, and team stats. Flag career highs or season lows where relevant.\n\n"
+    "WATCH TONIGHT\n"
+    "One sentence. The one game worth watching tonight based on the series context, recent form, "
+    "or rivalry. Include tip-off time if available.\n\n"
+    "Rules: be specific, be concise, do not hallucinate any stats not in the data provided, "
+    "do not use filler phrases like wire-to-wire or dominant performance."
 )
+
+GAME_CARD_SYSTEM_PROMPT = (
+    "Write exactly 2 sentences about this NBA game. "
+    "Sentence 1: how the game unfolded with specific reference to quarter momentum. "
+    "Sentence 2: the one stat or moment a casual fan would miss from the final score alone. "
+    "Be specific, no filler."
+)
+
+
+def _format_player_row(p):
+    fg_pct = f"{p['fg_pct']:.1%}" if p["fg_pct"] is not None else "N/A"
+    pm = f"{p['plus_minus']:+.0f}" if p.get("plus_minus") is not None else "N/A"
+    return (
+        f"  {p['name']:25s} "
+        f"PTS {p['points']:3}  REB {p['rebounds']:3}  AST {p['assists']:2}  "
+        f"STL {p['steals']:2}  BLK {p['blocks']:2}  FG% {fg_pct}  +/- {pm}"
+    )
 
 
 def format_game_for_prompt(game):
@@ -53,16 +80,83 @@ def format_game_for_prompt(game):
         f"{sl['home']['points']} PPG, {sl['home']['rebounds']} RPG, {sl['home']['assists']} APG",
     ]
 
+    if "player_stats" in game:
+        ps = game["player_stats"]
+        lines.append(f"\nTOP PERFORMERS — {away['city']} {away['name']} ({away['tricode']}):")
+        for p in ps.get("away_players", [])[:5]:
+            lines.append(_format_player_row(p))
+        lines.append(f"\nTOP PERFORMERS — {home['city']} {home['name']} ({home['tricode']}):")
+        for p in ps.get("home_players", [])[:5]:
+            lines.append(_format_player_row(p))
+
     return "\n".join(lines)
 
 
-def generate_recap(game):
+def format_all_games_for_digest(games):
+    sections = []
+    for i, game in enumerate(games, start=1):
+        home = game["home_team"]
+        away = game["away_team"]
+        gl   = game["game_leaders"]
+        ps   = game.get("player_stats", {})
+
+        quarters = [f"Q{j+1}" for j in range(len(home["quarters"]))]
+        q_labels = "  ".join(quarters)
+        away_q   = "  ".join(str(s) for s in away["quarters"])
+        home_q   = "  ".join(str(s) for s in home["quarters"])
+
+        lines = [
+            f"--- GAME {i}: {away['tricode']} @ {home['tricode']} ---",
+            f"{away['city']} {away['name']} ({away['wins']}-{away['losses']})  "
+            f"{away['score']}  @  "
+            f"{home['city']} {home['name']} ({home['wins']}-{home['losses']})  "
+            f"{home['score']}",
+
+            f"\nQUARTER SCORES:",
+            f"  {'':>10}   {q_labels}",
+            f"  {away['tricode']:>10}:  {away_q}",
+            f"  {home['tricode']:>10}:  {home_q}",
+
+            f"\nGAME LEADERS:",
+            f"  {away['tricode']} — {gl['away']['name']}: "
+            f"{gl['away']['points']} PTS, {gl['away']['rebounds']} REB, {gl['away']['assists']} AST",
+            f"  {home['tricode']} — {gl['home']['name']}: "
+            f"{gl['home']['points']} PTS, {gl['home']['rebounds']} REB, {gl['home']['assists']} AST",
+        ]
+
+        if ps:
+            lines.append(f"\nTOP PERFORMERS — {away['tricode']}:")
+            for p in ps.get("away_players", [])[:5]:
+                lines.append(_format_player_row(p))
+            lines.append(f"\nTOP PERFORMERS — {home['tricode']}:")
+            for p in ps.get("home_players", [])[:5]:
+                lines.append(_format_player_row(p))
+
+        sections.append("\n".join(lines))
+
+    return "\n\n".join(sections)
+
+
+def generate_digest(games):
+    prompt_text = format_all_games_for_digest(games)
+
+    message = client.messages.create(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=1000,
+        system=DIGEST_SYSTEM_PROMPT,
+        messages=[{"role": "user", "content": prompt_text}],
+    )
+
+    return message.content[0].text
+
+
+def generate_game_card_recap(game):
     prompt_text = format_game_for_prompt(game)
 
     message = client.messages.create(
         model="claude-haiku-4-5-20251001",
-        max_tokens=300,
-        system=SYSTEM_PROMPT,
+        max_tokens=150,
+        system=GAME_CARD_SYSTEM_PROMPT,
         messages=[{"role": "user", "content": prompt_text}],
     )
 
@@ -82,33 +176,3 @@ def format_recap_for_storage(game, recap_text, game_date):
         f"Final: {final} | "
         f"Recap: {recap_text.strip()}"
     )
-
-
-def main():
-    import sys
-    sys.path.insert(0, str(Path(__file__).parent.parent))
-    from pipeline.fetcher import get_games
-
-    print("Fetching most recent WNBA games...\n")
-    parsed, found_date = get_games()
-
-    if not parsed:
-        print("No recent games found.")
-        return
-
-    print(f"Generating recaps for {len(parsed)} game(s) from {found_date}:\n")
-    print("=" * 60)
-
-    for game in parsed:
-        home = game["home_team"]
-        away = game["away_team"]
-        print(f"\n{away['city']} {away['name']} {away['score']}  —  "
-              f"{home['city']} {home['name']} {home['score']}")
-        print("-" * 60)
-        recap = generate_recap(game)
-        print(recap)
-        print()
-
-
-if __name__ == "__main__":
-    main()
