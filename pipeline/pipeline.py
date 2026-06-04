@@ -1,6 +1,7 @@
 import warnings
 warnings.filterwarnings("ignore")
 
+import re
 import time
 import sys
 import io
@@ -152,59 +153,119 @@ def run_pipeline():
 
     # --- Full digest ---
     print("Generating digest...\n")
-    digest = generate_digest(
+    digest_text = generate_digest(
         enriched_games, upcoming_games=upcoming, underrated_player=underrated
     )
 
-    print("=" * 60)
-    print(f"  COURT REPORT  |  {found_date}")
-    print("=" * 60)
-    print(digest)
-    print()
-
     # --- Per-game card recaps (skip if only 1 game) ---
     card_recaps = {}
+    game_cards = []
     if len(enriched_games) > 1:
-        print("=" * 60)
-        print("  GAME CARDS")
-        print("=" * 60)
-
         for game in enriched_games:
             home = game["home_team"]
             away = game["away_team"]
-            header = (
+            matchup = (
                 f"{away['city']} {away['name']} {away['score']}  @  "
                 f"{home['city']} {home['name']} {home['score']}"
             )
             card_recap = generate_game_card_recap(game)
             game["card_recap"] = card_recap
             card_recaps[game["game_id"]] = card_recap
-
-            print(f"\n{header}")
-            print("-" * 60)
-            print(card_recap)
-        print()
+            game_cards.append({"matchup": matchup, "card_recap": card_recap})
     else:
-        # Single game — use digest as the card recap for storage
         g = enriched_games[0]
-        card_recaps[g["game_id"]] = digest
-        g["card_recap"] = digest
+        home, away = g["home_team"], g["away_team"]
+        matchup = (
+            f"{away['city']} {away['name']} {away['score']}  @  "
+            f"{home['city']} {home['name']} {home['score']}"
+        )
+        card_recaps[g["game_id"]] = ""
+        g["card_recap"] = ""
+        game_cards.append({"matchup": matchup, "card_recap": ""})
 
     # --- Store tonight's recaps in Chroma ---
-    print("=" * 60)
-    print("  STORING RECAPS TO CHROMA")
-    print("=" * 60)
+    print("Storing recaps to Chroma...\n")
     store_nightly_recaps(enriched_games, card_recaps, game_date=found_date)
-
-    # --- Collection size summary ---
     total_docs = get_vectorstore()._collection.count()
-    print(f"\n  Chroma collection now contains {total_docs} document(s) total.")
+    print(f"  Chroma collection now contains {total_docs} document(s) total.\n")
 
-    print()
-    print("=" * 60)
-    print(f"  Pipeline complete. {len(enriched_games)} game(s) from {found_date}.")
-    print("=" * 60)
+    # --- Parse digest sections into structured dict ---
+    def extract_section(text, header, next_headers):
+        """Extract a named section from the digest text.
+        Handles Claude markdown decorators: **, ##, # before the header word.
+        """
+        import re
+        md_prefix = r"(?:#{1,3}\s*|\*{1,2})*"
+        md_suffix = r"(?:\*{1,2})?"
+        pattern = md_prefix + re.escape(header) + md_suffix
+        start = re.search(pattern, text, re.IGNORECASE)
+        if not start:
+            return ""
+        content_start = start.end()
+        end = len(text)
+        for nxt in next_headers:
+            nxt_pattern = md_prefix + re.escape(nxt) + md_suffix
+            m = re.search(nxt_pattern, text[content_start:], re.IGNORECASE)
+            if m:
+                end = min(end, content_start + m.start())
+        return text[content_start:end].strip()
+
+    ordered_sections = [
+        "STORY OF THE NIGHT",
+        "PLAYERS OF THE NIGHT",
+        "BY THE NUMBERS",
+        "WATCH NEXT",
+    ]
+
+    story      = extract_section(digest_text, "STORY OF THE NIGHT",   ordered_sections[1:])
+    players    = extract_section(digest_text, "PLAYERS OF THE NIGHT", ordered_sections[2:])
+    by_numbers = extract_section(digest_text, "BY THE NUMBERS",       ordered_sections[3:])
+    watch_next = extract_section(digest_text, "WATCH NEXT",           [])
+
+    # Split BY THE NUMBERS into individual bullets, strip markdown noise
+    bullets = [
+        line.lstrip("•-– *").strip()
+        for line in by_numbers.splitlines()
+        if line.strip() and line.strip() not in ("**", "---", "*")
+        and not line.strip().lower().startswith("by the numbers")
+    ]
+    bullets = [b for b in bullets if b]  # drop any empty strings after strip
+    bullets = [re.sub(r'\*+', '', b).strip() for b in bullets]
+    bullets = [b for b in bullets if b]  # drop any newly empty strings
+
+    # Split PLAYERS OF THE NIGHT into top / underrated
+    top_line        = next((l for l in players.splitlines() if "🏆" in l or l.strip().startswith("🏆")), players)
+    underrated_line = next((l for l in players.splitlines() if "⭐" in l or l.strip().startswith("⭐")), "")
+
+    def clean(text):
+        import re
+        # Remove isolated markdown artifacts: lines that are only **, ---, *
+        lines = [l for l in text.splitlines() if l.strip() not in ("**", "---", "*", "")]
+        text = "\n".join(lines).strip(" *\n-")
+        # Strip all remaining bold markers
+        text = re.sub(r'\*+', '', text)
+        return text.strip()
+
+    result = {
+        "date":           found_date,
+        "story":          clean(story),
+        "players": {
+            "top":        clean(top_line),
+            "underrated": clean(underrated_line),
+        },
+        "by_the_numbers": bullets,
+        "watch_next":     clean(watch_next),
+        "games":          game_cards,
+    }
+
+    print(f"Pipeline complete. {len(enriched_games)} game(s) from {found_date}.")
+    return result
 
 
 if __name__ == "__main__":
-    run_pipeline()
+    import json
+    output = run_pipeline()
+    print("\n" + "=" * 60)
+    print("  STRUCTURED OUTPUT")
+    print("=" * 60)
+    print(json.dumps(output, indent=2, ensure_ascii=False))
