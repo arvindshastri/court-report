@@ -13,18 +13,26 @@ DIGEST_SYSTEM_PROMPT = (
     "Given last night's box scores, generate a digest with exactly these sections:\n\n"
     "STORY OF THE NIGHT\n"
     "Start with one bolded sentence — the single most dramatic moment of the night. "
-    "Then 2 sentences of broader context about how the night unfolded across the league.\n\n"
-    "PLAYER OF THE NIGHT\n"
-    "One player, the most impactful performance considering game context not just points. "
-    "Format: [Name] — [stats line] | [one sentence on why this performance mattered]\n\n"
+    "Then 2 sentences of broader context about how the night unfolded across the league. "
+    "If only one game is provided, the STORY OF THE NIGHT serves as the complete recap — "
+    "do not generate a separate game card section.\n\n"
+    "PLAYERS OF THE NIGHT\n"
+    "Always use this exact section header. Two entries, always in this order:\n"
+    "🏆 [Top performer by game score] — [stats line] | [one sentence on why their performance mattered]\n"
+    "⭐ [Underrated player] — [stats line] | Underrated: [one sentence explaining the gap between their points rank and impact score rank]\n\n"
     "BY THE NUMBERS\n"
-    "4 bullet points. Each is one standalone stat that needs no explanation to be impressive. "
+    "4 bullet points. Each must be 20 words or fewer. Lead with the number, then the player "
+    "or team name, then one short clause of context. "
+    "Example: 28.6% FG: Victor Wembanyama — worst shooting performance of the series. "
     "Mix teams, players, and team stats. Flag career highs or season lows where relevant.\n\n"
-    "WATCH TONIGHT\n"
-    "One sentence. The one game worth watching tonight based on the series context, recent form, "
-    "or rivalry. Include tip-off time if available.\n\n"
+    "WATCH NEXT\n"
+    "One sentence. The one upcoming game worth watching based on series context, recent form, "
+    "or rivalry. Reference the UPCOMING GAMES data provided. Include the date if available.\n\n"
     "Rules: be specific, be concise, do not hallucinate any stats not in the data provided, "
     "do not use filler phrases like wire-to-wire or dominant performance. "
+    "Always refer to players by their full first and last name. Only use a title or descriptor "
+    "if it is a specific verified accolade such as reigning MVP or reigning DPOY. "
+    "Never use vague references like 'their star' or 'the team's best player'. "
     "Where historical context is provided, reference it to make comparisons. "
     "If a player is performing above or below their historical norm, say so explicitly."
 )
@@ -94,7 +102,25 @@ def format_game_for_prompt(game):
     return "\n".join(lines)
 
 
-def format_all_games_for_digest(games):
+def _format_player_highlight(label, player):
+    """Format a single player highlight line for the digest prompt."""
+    fg_pct = f"{player['fg_pct']:.1%}" if player.get("fg_pct") is not None else "N/A"
+    pm = f"{player['plus_minus']:+.0f}" if player.get("plus_minus") is not None else "N/A"
+    gs = player.get("game_score")
+    gs_str = f"GS {gs}" if gs is not None else ""
+    pts_rank = player.get("_pts_rank")
+    gs_rank = player.get("_gs_rank")
+    rank_str = ""
+    if pts_rank is not None and gs_rank is not None:
+        rank_str = f"  [Points rank #{pts_rank+1}, Impact rank #{gs_rank+1}]"
+    return (
+        f"  {label}: {player['name']} ({player['team_tricode']})  "
+        f"PTS {player['points']}  REB {player['rebounds']}  AST {player['assists']}  "
+        f"STL {player['steals']}  BLK {player['blocks']}  FG% {fg_pct}  +/- {pm}  {gs_str}{rank_str}"
+    )
+
+
+def format_all_games_for_digest(games, upcoming_games=None, underrated_player=None):
     sections = []
     for i, game in enumerate(games, start=1):
         home = game["home_team"]
@@ -142,11 +168,41 @@ def format_all_games_for_digest(games):
 
         sections.append("\n".join(lines))
 
-    return "\n\n".join(sections)
+    full_prompt = "\n\n".join(sections)
+
+    # Best performer by game score across all games
+    all_players = []
+    for game in games:
+        ps = game.get("player_stats", {})
+        for side in ("home_players", "away_players"):
+            for p in ps.get(side, []):
+                if p.get("game_score") is not None:
+                    all_players.append(p)
+
+    if all_players:
+        best = max(all_players, key=lambda p: p["game_score"])
+        full_prompt += "\n\n--- PLAYER RECOGNITION ---"
+        full_prompt += "\n" + _format_player_highlight("BEST PERFORMER", best)
+        if underrated_player:
+            full_prompt += "\n" + _format_player_highlight("UNDERRATED PERFORMER", underrated_player)
+
+    if upcoming_games:
+        upcoming_lines = ["\n--- UPCOMING GAMES ---"]
+        for u in upcoming_games:
+            upcoming_lines.append(
+                f"  {u['away_tricode']} @ {u['home_tricode']}  |  "
+                f"{u['away_team']} vs {u['home_team']}  |  "
+                f"{u['scheduled_date']}  {u.get('game_status_text', '')}".rstrip()
+            )
+        full_prompt += "\n" + "\n".join(upcoming_lines)
+
+    return full_prompt
 
 
-def generate_digest(games):
-    prompt_text = format_all_games_for_digest(games)
+def generate_digest(games, upcoming_games=None, underrated_player=None):
+    prompt_text = format_all_games_for_digest(
+        games, upcoming_games=upcoming_games, underrated_player=underrated_player
+    )
 
     message = client.messages.create(
         model="claude-haiku-4-5-20251001",

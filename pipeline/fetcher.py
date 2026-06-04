@@ -3,7 +3,12 @@ warnings.filterwarnings("ignore")
 
 from dotenv import dotenv_values
 from pathlib import Path
-from nba_api.stats.endpoints import ScoreboardV3, BoxScoreTraditionalV3
+from nba_api.stats.endpoints import (
+    ScoreboardV3,
+    BoxScoreTraditionalV3,
+    LeagueGameFinder,
+    PlayerCareerStats,
+)
 from datetime import date, timedelta
 import time
 
@@ -157,18 +162,110 @@ def get_player_stats(game_id):
                 "fg_pct":        s.get("fieldGoalsPercentage"),
                 "fg3_made":      s.get("threePointersMade"),
                 "fg3_attempted": s.get("threePointersAttempted"),
-                "turnovers":     s.get("turnovers"),
-                "ft_made":       s.get("freeThrowsMade"),
-                "ft_attempted":  s.get("freeThrowsAttempted"),
-                "ft_pct":        s.get("freeThrowsPercentage"),
-                "personal_fouls": s.get("foulsPersonal"),
-                "plus_minus":    s.get("plusMinusPoints"),
+                "turnovers":           s.get("turnovers"),
+                "ft_made":             s.get("freeThrowsMade"),
+                "ft_attempted":        s.get("freeThrowsAttempted"),
+                "ft_pct":              s.get("freeThrowsPercentage"),
+                "personal_fouls":      s.get("foulsPersonal"),
+                "plus_minus":          s.get("plusMinusPoints"),
+                "offensive_rebounds":  s.get("reboundsOffensive"),
+                "defensive_rebounds":  s.get("reboundsDefensive"),
             })
         return sorted(players, key=lambda p: p["points"] or 0, reverse=True)
 
     return {
         "home_players": parse_players(data["homeTeam"]),
         "away_players": parse_players(data["awayTeam"]),
+    }
+
+
+def get_upcoming_games():
+    """
+    Return scheduled (not yet played) NBA games for today and the next 3 days.
+    gameStatus == 1 means the game has not started yet.
+    Returns a list of dicts with home_team, away_team, and scheduled_date.
+    """
+    upcoming = []
+    for days_ahead in range(0, 4):
+        check_date = date.today() + timedelta(days=days_ahead)
+        date_str = check_date.strftime("%Y-%m-%d")
+        try:
+            scoreboard = ScoreboardV3(game_date=date_str, league_id="00")
+            games = scoreboard.get_dict()["scoreboard"]["games"]
+            for g in games:
+                if g.get("gameStatus") == 1:
+                    upcoming.append({
+                        "scheduled_date": date_str,
+                        "home_team": g["homeTeam"]["teamCity"] + " " + g["homeTeam"]["teamName"],
+                        "away_team": g["awayTeam"]["teamCity"] + " " + g["awayTeam"]["teamName"],
+                        "home_tricode": g["homeTeam"]["teamTricode"],
+                        "away_tricode": g["awayTeam"]["teamTricode"],
+                        "game_status_text": g.get("gameStatusText", "").strip(),
+                    })
+        except Exception as e:
+            print(f"  [warn] Could not fetch upcoming games for {date_str}: {e}")
+    return upcoming
+
+
+def get_series_games(home_team_id, away_team_id, season="2024-25"):
+    """
+    Pull all playoff games between two specific teams in a given season
+    using LeagueGameFinder. Returns a list of game dicts with date, score,
+    and game number.
+    """
+    time.sleep(0.6)
+    finder = LeagueGameFinder(
+        team_id_nullable=home_team_id,
+        vs_team_id_nullable=away_team_id,
+        season_nullable=season,
+        season_type_nullable="Playoffs",
+        league_id_nullable="00",
+    )
+    rows = finder.get_dict()["resultSets"][0]
+    headers = rows["headers"]
+    games = []
+    for row in rows["rowSet"]:
+        g = dict(zip(headers, row))
+        games.append({
+            "game_id":   g.get("GAME_ID"),
+            "date":      g.get("GAME_DATE"),
+            "matchup":   g.get("MATCHUP"),
+            "wl":        g.get("WL"),
+            "pts":       g.get("PTS"),
+            "pts_opp":   g.get("PLUS_MINUS"),  # approximation via available fields
+        })
+    return games
+
+
+def get_player_season_averages(player_id, season="2024-25"):
+    """
+    Pull season averages for a player using PlayerCareerStats.
+    Returns a dict with key per-game averages for the requested season.
+    """
+    time.sleep(0.6)
+    career = PlayerCareerStats(player_id=player_id, per_mode36="PerGame")
+    data = career.get_dict()
+    reg_season = next(
+        (rs for rs in data["resultSets"] if rs["name"] == "SeasonTotalsRegularSeason"),
+        None,
+    )
+    if not reg_season:
+        return {}
+    headers = reg_season["headers"]
+    season_row = next(
+        (dict(zip(headers, row)) for row in reg_season["rowSet"]
+         if row[headers.index("SEASON_ID")] == season),
+        None,
+    )
+    if not season_row:
+        return {}
+    return {
+        "points":   season_row.get("PTS"),
+        "rebounds": season_row.get("REB"),
+        "assists":  season_row.get("AST"),
+        "steals":   season_row.get("STL"),
+        "blocks":   season_row.get("BLK"),
+        "fg_pct":   season_row.get("FG_PCT"),
     }
 
 
