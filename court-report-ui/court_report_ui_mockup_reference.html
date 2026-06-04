@@ -1,0 +1,616 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700;1,800&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#F2EDE3;
+  --ink:#0E0D0B;
+  --red:#D63118;
+  --gold:#E9B84A;
+  --cream:#FAF7F0;
+  --rule:#C5BDB0;
+  --muted:#7A7268;
+  --card:#FFFFFF;
+  --bw:2px;
+  --bwb:2.5px;
+  --shadow:4px 4px 0 var(--ink);
+  --shadow-lg:6px 6px 0 var(--ink);
+}
+
+body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;min-height:100vh}
+
+/* ── MASTHEAD ── */
+.masthead{
+  background:var(--cream);
+  border-bottom:var(--bwb) solid var(--ink);
+}
+
+.mast-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 28px;
+  border-bottom:var(--bw) solid var(--rule);
+}
+
+.mast-meta{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+.mast-center{
+  text-align:center;
+  padding:14px 28px 6px;
+}
+
+.logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(56px,9vw,92px);
+  letter-spacing:8px;
+  line-height:1;
+  color:var(--ink);
+  display:block;
+}
+.logo span{color:var(--red)}
+
+.mast-rule{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:8px 28px 12px;
+}
+.mast-rule-line{flex:1;height:1.5px;background:var(--ink);opacity:0.25}
+.mast-rule-text{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--ink);
+  white-space:nowrap;
+  opacity:0.5;
+}
+
+/* ── TICKER ── */
+.ticker{
+  background:var(--ink);
+  height:34px;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+  white-space:nowrap;
+}
+.ticker-inner{
+  display:inline-block;
+  animation:tick 42s linear infinite;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--gold);
+  line-height:1;
+}
+@keyframes tick{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
+
+/* ── LAYOUT ── */
+.wrap{
+  display:grid;
+  grid-template-columns:1fr 320px;
+  max-width:1160px;
+  margin:0 auto;
+}
+
+.main{padding:36px 40px;border-right:var(--bwb) solid var(--ink)}
+.rail{padding:32px 26px;display:flex;flex-direction:column;gap:20px}
+
+/* ── SECTION LABELS ── */
+.rh{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.rh-label{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--muted);
+  white-space:nowrap;
+}
+.rh-line{flex:1;height:1.5px;background:var(--rule)}
+
+/* ── STORY ── */
+.story{margin-bottom:36px}
+
+.story-kicker{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--red);
+  margin-bottom:8px;
+  display:flex;align-items:center;gap:6px;
+}
+.story-kicker::before{content:'★';font-size:10px}
+
+.story-hed{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(44px,5.8vw,68px);
+  font-weight:800;
+  font-style:italic;
+  line-height:0.93;
+  margin-bottom:14px;
+}
+.story-hed .hl{background:var(--gold);color:var(--ink);font-style:normal;padding:0 5px}
+.story-hed .ul{position:relative;display:inline}
+.story-hed .ul::after{
+  content:'';position:absolute;
+  left:0;bottom:-3px;width:100%;height:4px;background:var(--red);
+}
+
+.story-body{
+  font-size:15px;line-height:1.75;color:#3D3830;
+  border-top:var(--bwb) solid var(--ink);padding-top:14px;
+}
+
+/* ── PLAYER CARDS ── */
+.players{margin-bottom:36px}
+
+.p-card{
+  border:var(--bw) solid var(--ink);
+  background:var(--card);
+  box-shadow:var(--shadow);
+  margin-bottom:10px;
+  padding:16px 18px 16px 22px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:24px;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+  transition:transform 0.15s,box-shadow 0.15s;
+}
+.p-card:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg)}
+.p-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px}
+.p-card.top::before{background:var(--gold)}
+.p-card.und::before{background:#1A5C4A}
+
+.p-badge{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:10px;font-weight:800;
+  letter-spacing:0.18em;text-transform:uppercase;
+  display:inline-block;padding:3px 8px;
+  margin-bottom:6px;border:var(--bw) solid var(--ink);
+}
+.p-badge.gold{background:var(--gold);color:var(--ink)}
+.p-badge.teal{background:#1A5C4A;color:#fff;border-color:#1A5C4A}
+
+.p-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:30px;letter-spacing:1px;line-height:1;
+  margin-bottom:5px;color:var(--ink);
+}
+.p-why{font-size:12px;line-height:1.55;color:var(--muted);max-width:280px}
+
+/* B-style stats on right */
+.p-stats{display:flex;gap:14px;align-items:flex-end}
+.s-blk{text-align:right}
+.s-n{font-family:'Bebas Neue',sans-serif;font-size:34px;line-height:1;color:var(--ink)}
+.s-l{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:9px;font-weight:700;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--muted);
+}
+
+/* ── NUMBERS — B layout inside OG cards ── */
+.numbers{margin-bottom:36px}
+
+.num-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.num-card{
+  border:var(--bw) solid var(--ink);
+  background:var(--card);
+  box-shadow:var(--shadow);
+  padding:16px;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:14px;
+  align-items:center;
+  transition:transform 0.15s,box-shadow 0.15s,background 0.15s;
+  cursor:default;
+}
+.num-card:hover{
+  transform:translate(-2px,-2px);
+  box-shadow:var(--shadow-lg);
+  background:var(--gold);
+}
+.num-card:hover .num-fig{color:var(--ink)}
+.num-card:hover .num-ctx{color:var(--ink)}
+
+.num-fig{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:44px;line-height:1;
+  color:var(--red);
+  white-space:nowrap;
+}
+.num-right{}
+.num-who{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:13px;font-weight:700;
+  letter-spacing:0.05em;text-transform:uppercase;
+  color:var(--ink);margin-bottom:3px;
+}
+.num-ctx{font-size:11px;line-height:1.45;color:var(--muted)}
+
+/* ── GAME CARD ── */
+.games{margin-bottom:0}
+
+.gcard{
+  border:var(--bw) solid var(--ink);
+  background:var(--card);
+  box-shadow:var(--shadow);
+  margin-bottom:10px;
+  overflow:hidden;
+  transition:transform 0.15s,box-shadow 0.15s;
+}
+.gcard:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg)}
+
+.gcard-head{
+  display:grid;grid-template-columns:1fr auto;
+  gap:16px;align-items:center;
+  padding:13px 16px;cursor:pointer;
+  transition:background 0.12s;
+}
+.gcard-head:hover{background:#F5F0E6}
+
+.g-label{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:4px;
+}
+.g-score{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:28px;letter-spacing:2px;line-height:1;
+}
+.g-w{color:var(--ink)}
+.g-l{color:var(--muted)}
+
+.g-btn{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);border:var(--bw) solid var(--rule);
+  padding:5px 11px;background:transparent;
+  cursor:pointer;transition:all 0.15s;white-space:nowrap;
+}
+.gcard.open .g-btn{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+
+.gcard-body{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.38s cubic-bezier(0.4,0,0.2,1);
+}
+.gcard.open .gcard-body{max-height:240px}
+
+.gcard-inner{
+  padding:14px 16px;font-size:13px;
+  line-height:1.65;color:#3D3830;
+  border-top:var(--bw) solid var(--rule);
+  background:var(--bg);
+}
+
+/* ── WATCH NEXT ── */
+.watch{
+  border:var(--bw) solid var(--ink);
+  background:var(--cream);
+  box-shadow:var(--shadow);
+  padding:20px;
+  position:relative;overflow:hidden;
+}
+.watch::before{
+  content:'⚡';position:absolute;
+  right:14px;top:10px;font-size:48px;
+  opacity:0.07;pointer-events:none;
+}
+
+.w-eyebrow{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:12px;font-weight:700;
+  letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--red);margin-bottom:8px;
+}
+.w-matchup{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:22px;font-weight:800;font-style:italic;
+  color:var(--ink);line-height:1.1;margin-bottom:10px;
+}
+.w-copy{
+  font-size:12px;line-height:1.65;
+  color:var(--muted);margin-bottom:14px;
+}
+.w-pill{
+  display:inline-block;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;
+  background:var(--ink);color:var(--cream);
+  padding:5px 12px;
+}
+
+/* ── CHAT — fully redesigned ── */
+.chat{
+  border:var(--bw) solid var(--ink);
+  background:var(--card);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+
+.chat-head{
+  padding:12px 16px;
+  border-bottom:var(--bw) solid var(--ink);
+  display:flex;align-items:center;gap:8px;
+  background:var(--cream);
+}
+
+.c-dot{
+  width:8px;height:8px;
+  background:#3DD68C;border-radius:50%;flex-shrink:0;
+  animation:bp 2s ease-in-out infinite;
+}
+@keyframes bp{0%,100%{opacity:1}50%{opacity:0.2}}
+
+.chat-head-lbl{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px;font-weight:800;
+  letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--ink);
+}
+
+.chat-msgs{
+  min-height:80px;max-height:150px;overflow-y:auto;
+  padding:12px;display:flex;flex-direction:column;gap:8px;
+  background:var(--bg);
+}
+
+.c-empty{
+  font-family:'Barlow',sans-serif;
+  font-size:13px;color:var(--muted);
+  text-align:center;padding:16px 0;font-style:italic;
+}
+
+.bub{
+  padding:8px 12px;font-size:12px;line-height:1.5;
+  max-width:90%;font-family:'Barlow',sans-serif;
+  border:var(--bw) solid var(--ink);
+}
+.bub.u{align-self:flex-end;background:var(--gold);font-weight:600}
+.bub.a{align-self:flex-start;background:var(--card)}
+
+/* THE FIXED SEARCH BAR */
+.chat-foot{
+  border-top:var(--bw) solid var(--ink);
+  background:var(--cream);
+  display:flex;
+  align-items:stretch;
+}
+
+.c-inp{
+  flex:1;
+  padding:12px 14px;
+  border:none;
+  border-right:var(--bw) solid var(--ink);
+  background:var(--cream);
+  font-family:'Barlow',sans-serif;
+  font-size:13px;
+  color:var(--ink);
+  outline:none;
+  display:block;
+}
+.c-inp::placeholder{color:var(--muted);font-style:italic}
+.c-inp:focus{background:var(--card)}
+
+.c-send{
+  border:none;
+  background:var(--red);
+  color:#fff;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:14px;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:0 18px;
+  cursor:pointer;
+  transition:background 0.15s;
+  flex-shrink:0;
+  display:flex;align-items:center;
+}
+.c-send:hover{background:var(--ink)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .wrap{grid-template-columns:1fr}
+  .main{border-right:none;padding:24px 20px}
+  .rail{border-top:var(--bwb) solid var(--ink);padding:24px 20px}
+  .story-hed{font-size:44px}
+  .num-grid{grid-template-columns:1fr}
+  .p-stats{gap:10px}
+  .s-n{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="mast-top">
+    <div class="mast-meta">Vol. 1 &nbsp;·&nbsp; Issue 7 &nbsp;·&nbsp; NBA Finals 2026</div>
+    <div class="mast-meta">Powered by Claude AI</div>
+  </div>
+  <div class="mast-center">
+    <div class="logo">COURT<span>REPORT</span></div>
+  </div>
+  <div class="mast-rule">
+    <div class="mast-rule-line"></div>
+    <div class="mast-rule-text">Your nightly NBA intelligence briefing</div>
+    <div class="mast-rule-line"></div>
+  </div>
+</div>
+
+<div class="ticker">
+  <span class="ticker-inner">
+    ★ GAME 1 FINAL: NYK 105 — SAS 95 &nbsp;·&nbsp; BRUNSON: 30 PTS / 38.7% FG &nbsp;·&nbsp; WEMBANYAMA: 26 PTS / 28.6% FG &nbsp;·&nbsp; JOSH HART: 3 PTS / +22 / 15 REB / 4 STL &nbsp;·&nbsp; GAME 2 — JUN 5 @ 8:30 PM ET &nbsp;·&nbsp; ★ GAME 1 FINAL: NYK 105 — SAS 95 &nbsp;·&nbsp; BRUNSON: 30 PTS / 38.7% FG &nbsp;·&nbsp;
+  </span>
+</div>
+
+<div class="wrap">
+<div class="main">
+
+  <div class="story">
+    <div class="story-kicker">Story of the Night — NBA Finals, Game 1</div>
+    <h1 class="story-hed">
+      Brunson's <span class="hl">30-Point</span> Night<br>
+      <span class="ul">Silences</span> San Antonio
+    </h1>
+    <p class="story-body">
+      Jalen Brunson's 30-point performance powered New York past San Antonio 105-95, with the Knicks' fourth-quarter surge proving decisive after the Spurs built an early 27-point first quarter. Despite Victor Wembanyama's 26 points and 12 rebounds, his 28.6% shooting exposed a critical inefficiency that New York's balanced depth exploited all night long.
+    </p>
+  </div>
+
+  <div class="players">
+    <div class="rh"><span class="rh-label">Players of the Night</span><div class="rh-line"></div></div>
+
+    <div class="p-card top">
+      <div class="p-left">
+        <div class="p-badge gold">🏆 Player of the Night</div>
+        <div class="p-name">Jalen Brunson</div>
+        <div class="p-why">Controlled pace and broke the game open in Q2. Steady under pressure when the Spurs threatened a late comeback.</div>
+      </div>
+      <div class="p-stats">
+        <div class="s-blk"><div class="s-n">30</div><div class="s-l">PTS</div></div>
+        <div class="s-blk"><div class="s-n">3</div><div class="s-l">REB</div></div>
+        <div class="s-blk"><div class="s-n">2</div><div class="s-l">AST</div></div>
+      </div>
+    </div>
+
+    <div class="p-card und">
+      <div class="p-left">
+        <div class="p-badge teal">⭐ Most Underrated</div>
+        <div class="p-name">Josh Hart</div>
+        <div class="p-why">Ranked 13th in points, 6th in impact. Won the game without scoring — +22 rating, 15 rebounds, 4 steals.</div>
+      </div>
+      <div class="p-stats">
+        <div class="s-blk"><div class="s-n">+22</div><div class="s-l">+/-</div></div>
+        <div class="s-blk"><div class="s-n">15</div><div class="s-l">REB</div></div>
+        <div class="s-blk"><div class="s-n">4</div><div class="s-l">STL</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="numbers">
+    <div class="rh"><span class="rh-label">By the Numbers</span><div class="rh-line"></div></div>
+    <div class="num-grid">
+      <div class="num-card">
+        <div class="num-fig">28.6%</div>
+        <div class="num-right">
+          <div class="num-who">Victor Wembanyama</div>
+          <div class="num-ctx">Worst shooting of the series — 7-of-24 despite 26 pts and 12 reb</div>
+        </div>
+      </div>
+      <div class="num-card">
+        <div class="num-fig">+22</div>
+        <div class="num-right">
+          <div class="num-who">Josh Hart</div>
+          <div class="num-ctx">Best plus-minus on either team — dominated without scoring in Q4</div>
+        </div>
+      </div>
+      <div class="num-card">
+        <div class="num-fig">29</div>
+        <div class="num-right">
+          <div class="num-who">Knicks Q2 Points</div>
+          <div class="num-ctx">Second-quarter explosion that swung Game 1 decisively</div>
+        </div>
+      </div>
+      <div class="num-card">
+        <div class="num-fig">−13</div>
+        <div class="num-right">
+          <div class="num-who">Devin Vassell</div>
+          <div class="num-ctx">Worst plus-minus on San Antonio — depth concerns exposed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="games">
+    <div class="rh"><span class="rh-label">Game Recap</span><div class="rh-line"></div></div>
+    <div class="gcard" id="g1">
+      <div class="gcard-head" onclick="tog('g1')">
+        <div>
+          <div class="g-label">New York Knicks @ San Antonio Spurs &nbsp;·&nbsp; Finals Game 1</div>
+          <div class="g-score"><span class="g-w">NYK 105</span> — <span class="g-l">SAS 95</span></div>
+        </div>
+        <button class="g-btn">Expand ↓</button>
+      </div>
+      <div class="gcard-body">
+        <div class="gcard-inner">
+          The Knicks dominated the middle quarters by outscoring San Antonio 57-49 in Q2 and Q3 after the Spurs' hot first-quarter start, then closed it in the fourth. Wembanyama's 26 points came on just 28.6% shooting — the Spurs' star forced his way to nearly half the team's scoring on poor efficiency, while Brunson's 30 on 38.7% was the more sustainable difference.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="rail">
+
+  <div class="watch">
+    <div class="w-eyebrow">⚡ Watch Next</div>
+    <div class="w-matchup">New York Knicks<br>@ San Antonio Spurs</div>
+    <div class="w-copy">Wembanyama's efficiency must improve dramatically, and the Spurs' bench depth will determine if they can steal a game before heading to New York. NYK leads series 1–0.</div>
+    <div class="w-pill">Game 2 — Jun 5 @ 8:30 PM ET</div>
+  </div>
+
+  <div class="chat">
+    <div class="chat-head">
+      <div class="c-dot"></div>
+      <div class="chat-head-lbl">Ask Court Report</div>
+    </div>
+    <div class="chat-msgs" id="cm">
+      <div class="c-empty">Ask anything about last night...</div>
+    </div>
+    <div class="chat-foot">
+      <input class="c-inp" id="ci" placeholder="How did Wemby compare to his average?" onkeydown="if(event.key==='Enter')ask()">
+      <button class="c-send" onclick="ask()">Ask →</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+function tog(id){
+  const c=document.getElementById(id);
+  c.classList.toggle('open');
+  c.querySelector('.g-btn').textContent=c.classList.contains('open')?'Close ↑':'Expand ↓';
+}
+function ask(){
+  const i=document.getElementById('ci'),m=document.getElementById('cm'),v=i.value.trim();
+  if(!v)return;
+  const e=m.querySelector('.c-empty');if(e)e.remove();
+  const u=document.createElement('div');u.className='bub u';u.textContent=v;m.appendChild(u);
+  i.value='';
+  setTimeout(()=>{
+    const a=document.createElement('div');a.className='bub a';
+    a.textContent='Connecting to Court Report...';
+    m.appendChild(a);m.scrollTop=m.scrollHeight;
+  },350);
+  m.scrollTop=m.scrollHeight;
+}
+</script>
+</body>
+</html>
