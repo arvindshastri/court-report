@@ -4,102 +4,100 @@ warnings.filterwarnings("ignore")
 import sys
 from pathlib import Path
 from datetime import date
-import chromadb
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from dotenv import dotenv_values
+from langchain_chroma import Chroma
+from langchain_huggingface import HuggingFaceEmbeddings
 from pipeline.claude_recap import format_recap_for_storage
 
 config = dotenv_values(Path(__file__).parent.parent / ".env")
 
-PROJECT_ROOT = Path(__file__).parent.parent
-CHROMA_PATH  = PROJECT_ROOT / "data" / "chroma_db"
+PROJECT_ROOT    = Path(__file__).parent.parent
+CHROMA_PATH     = str(PROJECT_ROOT / "data" / "chroma_db")
+COLLECTION_NAME = "court_report_history"
+EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
 
-def init_collection():
+def get_vectorstore():
     """
-    Creates a persistent Chroma client stored at data/chroma_db and
-    returns the 'court_report_history' collection (created if needed).
+    Initialize and return a LangChain Chroma vectorstore backed by
+    HuggingFace sentence-transformer embeddings, persisted to data/chroma_db.
     """
-    client = chromadb.PersistentClient(path=str(CHROMA_PATH))
-    collection = client.get_or_create_collection(name="court_report_history")
-    return collection
+    embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL)
+    vectorstore = Chroma(
+        collection_name=COLLECTION_NAME,
+        embedding_function=embeddings,
+        persist_directory=CHROMA_PATH,
+    )
+    return vectorstore
 
 
 def store_game_recap(game, recap_text, game_date=None):
     """
-    Store a single game recap in Chroma.
-    Skips silently if the document ID already exists.
+    Store a single game recap in the vectorstore.
+    Skips if a document with the same game_id and date already exists.
     """
     if game_date is None:
         game_date = date.today().isoformat()
 
-    game_id  = game["game_id"]
-    home     = game["home_team"]
-    away     = game["away_team"]
-    doc_id   = f"game_{game_id}_{game_date}"
+    game_id = game["game_id"]
+    home    = game["home_team"]
+    away    = game["away_team"]
+    doc_id  = f"game_{game_id}_{game_date}"
 
     document = format_recap_for_storage(game, recap_text, game_date)
 
     metadata = {
-        "game_id":      game_id,
-        "date":         game_date,
-        "home_team":    f"{home['city']} {home['name']}",
-        "away_team":    f"{away['city']} {away['name']}",
-        "home_score":   int(home["score"]) if home["score"] not in (None, "") else 0,
-        "away_score":   int(away["score"]) if away["score"] not in (None, "") else 0,
-        "home_record":  f"{home['wins']}-{home['losses']}",
-        "away_record":  f"{away['wins']}-{away['losses']}",
+        "game_id":    game_id,
+        "date":       game_date,
+        "home_team":  f"{home['city']} {home['name']}",
+        "away_team":  f"{away['city']} {away['name']}",
+        "home_score": int(home["score"]) if home["score"] not in (None, "") else 0,
+        "away_score": int(away["score"]) if away["score"] not in (None, "") else 0,
+        "home_record": f"{home['wins']}-{home['losses']}",
+        "away_record": f"{away['wins']}-{away['losses']}",
     }
 
-    collection = init_collection()
+    vs = get_vectorstore()
 
-    # Check for existing document
-    existing = collection.get(ids=[doc_id])
-    if existing["ids"]:
+    # Duplicate check — query by game_id in metadata
+    existing = vs.get(where={"game_id": game_id})
+    if existing and existing.get("ids"):
         print(f"  [skip] Already stored: {doc_id}")
         return
 
-    collection.add(
-        documents=[document],
-        metadatas=[metadata],
-        ids=[doc_id],
-    )
+    vs.add_texts(texts=[document], metadatas=[metadata], ids=[doc_id])
     print(f"  [stored] {doc_id}  |  {away['tricode']} {away['score']} @ {home['tricode']} {home['score']}")
 
 
 def retrieve_relevant_history(query, n_results=3):
     """
-    Query the collection for the most relevant past game recaps.
+    Query the vectorstore for the most semantically similar past recaps.
     Returns a list of matching document strings.
     """
-    collection = init_collection()
+    vs = get_vectorstore()
 
-    if collection.count() == 0:
+    if vs._collection.count() == 0:
         print("  [info] No history available yet — collection is empty.")
         return []
 
-    results = collection.query(
-        query_texts=[query],
-        n_results=min(n_results, collection.count()),
-    )
-
-    documents = results.get("documents", [[]])[0]
-    return documents
+    retriever = vs.as_retriever(search_kwargs={"k": n_results})
+    results   = retriever.invoke(query)
+    return [doc.page_content for doc in results]
 
 
 def delete_document(doc_id):
     """
-    Delete a single document from the collection by its ID.
-    Prints a confirmation or a warning if the ID was not found.
+    Delete a single document from the vectorstore by its ID.
     """
-    collection = init_collection()
-    existing = collection.get(ids=[doc_id])
-    if not existing["ids"]:
+    vs = get_vectorstore()
+    existing = vs.get(ids=[doc_id])
+    if not existing or not existing.get("ids"):
         print(f"  [warn] Document not found, nothing deleted: {doc_id}")
         return
-    collection.delete(ids=[doc_id])
+    vs.delete(ids=[doc_id])
     print(f"  [deleted] {doc_id}")
 
 
@@ -144,15 +142,12 @@ if __name__ == "__main__":
         away = game["away_team"]
         print(f"  Processing: {away['tricode']} @ {home['tricode']} (game {game['game_id']})")
 
-        # Enrich with player stats
         time.sleep(0.6)
         game["player_stats"] = get_player_stats(game["game_id"])
 
-        # Generate card recap
         recap = generate_game_card_recap(game)
         print(f"  Recap generated.")
 
-        # Store in Chroma
         store_game_recap(game, recap, game_date=found_date)
         print()
 
@@ -166,10 +161,3 @@ if __name__ == "__main__":
             print(f"Result {i}:\n{doc}\n")
     else:
         print("No results returned.")
-
-    # Clean up fake test document
-    print("\nRemoving fake test document...\n")
-    delete_document("game_TEST001_2025-06-10")
-
-    collection = init_collection()
-    print(f"\n  Collection now contains {collection.count()} document(s).")

@@ -10,10 +10,9 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from pipeline.fetcher import get_games, get_player_stats
 from pipeline.claude_recap import generate_digest, generate_game_card_recap
 from pipeline.chroma_store import (
-    store_game_recap,
     retrieve_relevant_history,
     store_nightly_recaps,
-    init_collection,
+    get_vectorstore,
 )
 
 
@@ -39,9 +38,9 @@ def attach_historical_context(games):
         history = retrieve_relevant_history(query, n_results=3)
         game["historical_context"] = history
         if history:
-            print(f"  [history] Found {len(history)} past recap(s) for {away} @ {home}")
+            print(f"  [history] Found {len(history)} relevant historical recap(s) retrieved from Chroma")
         else:
-            print(f"  [history] No prior history for {away} @ {home}")
+            print(f"  [history] No relevant history found in Chroma")
 
 
 def run_pipeline():
@@ -98,8 +97,7 @@ def run_pipeline():
     store_nightly_recaps(enriched_games, card_recaps, game_date=found_date)
 
     # --- Collection size summary ---
-    collection = init_collection()
-    total_docs = collection.count()
+    total_docs = get_vectorstore()._collection.count()
     print(f"\n  Chroma collection now contains {total_docs} document(s) total.")
 
     print()
