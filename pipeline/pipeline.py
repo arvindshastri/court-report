@@ -18,6 +18,7 @@ from pipeline.claude_recap import generate_digest, generate_game_card_recap
 from pipeline.chroma_store import (
     retrieve_relevant_history,
     store_nightly_recaps,
+    store_player_game_stats,
     get_vectorstore,
 )
 
@@ -108,7 +109,7 @@ def get_underrated_player(games):
     return best
 
 
-def attach_historical_context(games):
+def attach_historical_context(games, vs=None):
     """
     For each game, query Chroma for relevant past game recaps and attach
     the results under the 'historical_context' key.
@@ -117,7 +118,7 @@ def attach_historical_context(games):
         home = f"{game['home_team']['city']} {game['home_team']['name']}"
         away = f"{game['away_team']['city']} {game['away_team']['name']}"
         query = f"{home} vs {away} recent performance history"
-        history = retrieve_relevant_history(query, n_results=3)
+        history = retrieve_relevant_history(query, n_results=3, vs=vs)
         game["historical_context"] = history
         if history:
             print(f"  [history] Found {len(history)} relevant historical recap(s) retrieved from Chroma")
@@ -136,9 +137,12 @@ def run_pipeline():
     print(f"Enriching {len(games)} game(s) from {found_date} with player stats...\n")
     enriched_games = [build_full_game(g) for g in games]
 
+    # --- Initialize Chroma once for this pipeline run ---
+    vs = get_vectorstore()
+
     # --- Retrieve historical context from Chroma ---
     print("\nRetrieving historical context from Chroma...\n")
-    attach_historical_context(enriched_games)
+    attach_historical_context(enriched_games, vs=vs)
 
     # --- Fetch upcoming games ---
     print("Fetching upcoming NBA games...\n")
@@ -186,7 +190,8 @@ def run_pipeline():
     # --- Store tonight's recaps in Chroma ---
     print("Storing recaps to Chroma...\n")
     store_nightly_recaps(enriched_games, card_recaps, game_date=found_date)
-    total_docs = get_vectorstore()._collection.count()
+    store_player_game_stats(enriched_games, found_date)
+    total_docs = vs._collection.count()
     print(f"  Chroma collection now contains {total_docs} document(s) total.\n")
 
     # --- Parse digest sections into structured dict ---

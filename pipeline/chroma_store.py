@@ -72,12 +72,85 @@ def store_game_recap(game, recap_text, game_date=None):
     print(f"  [stored] {doc_id}  |  {away['tricode']} {away['score']} @ {home['tricode']} {home['score']}")
 
 
-def retrieve_relevant_history(query, n_results=3):
+def _parse_minutes(minutes_str):
+    """Convert 'MM:SS' string to float minutes."""
+    try:
+        parts = str(minutes_str).split(":")
+        return int(parts[0]) + int(parts[1]) / 60
+    except Exception:
+        return 0.0
+
+
+def store_player_game_stats(games, game_date):
+    """
+    Store one Chroma document per player per game for every player who played
+    more than 5 minutes. Skips duplicates by document ID.
+    """
+    vs = get_vectorstore()
+    stored = 0
+    skipped = 0
+
+    for game in games:
+        game_id   = game["game_id"]
+        home_tri  = game["home_team"]["tricode"]
+        away_tri  = game["away_team"]["tricode"]
+        ps        = game.get("player_stats", {})
+
+        for side in ("home_players", "away_players"):
+            opponent_tri = away_tri if side == "home_players" else home_tri
+            for p in ps.get(side, []):
+                if _parse_minutes(p.get("minutes") or "0:00") <= 5:
+                    continue
+
+                player_name   = p["name"]
+                team_tri      = p["team_tricode"]
+                fg_made       = p.get("fg_made") or 0
+                fg_att        = p.get("fg_attempted") or 0
+                fg_pct        = p.get("fg_pct")
+                fg_pct_str    = f"{fg_pct * 100:.1f}" if fg_pct is not None else "0.0"
+                ft_made       = p.get("ft_made") or 0
+                ft_att        = p.get("ft_attempted") or 0
+                pm            = p.get("plus_minus")
+                pm_str        = f"{pm:+.0f}" if pm is not None else "+0"
+
+                document = (
+                    f"{player_name} | {team_tri} vs {opponent_tri} | {game_date} | "
+                    f"{p.get('points', 0)} PTS {p.get('rebounds', 0)} REB "
+                    f"{p.get('assists', 0)} AST {p.get('steals', 0)} STL "
+                    f"{p.get('blocks', 0)} BLK {p.get('turnovers', 0)} TO "
+                    f"{fg_made}-{fg_att} FG ({fg_pct_str}%) "
+                    f"{ft_made}-{ft_att} FT {pm_str} +/-"
+                )
+
+                safe_name = player_name.replace(" ", "_")
+                doc_id    = f"player_{safe_name}_{game_id}"
+                metadata  = {
+                    "type":        "player_game",
+                    "date":        game_date,
+                    "player_name": player_name,
+                    "team":        team_tri,
+                    "game_id":     game_id,
+                }
+
+                existing = vs.get(ids=[doc_id])
+                if existing and existing.get("ids"):
+                    skipped += 1
+                    continue
+
+                vs.add_texts(texts=[document], metadatas=[metadata], ids=[doc_id])
+                stored += 1
+
+    print(f"  [player stats] Stored {stored} player-game document(s), skipped {skipped} duplicate(s).")
+
+
+def retrieve_relevant_history(query, n_results=3, vs=None):
     """
     Query the vectorstore for the most semantically similar past recaps.
     Returns a list of matching document strings.
+    Pass a pre-initialized vectorstore via `vs` to avoid reloading the embedding model.
     """
-    vs = get_vectorstore()
+    if vs is None:
+        vs = get_vectorstore()
 
     if vs._collection.count() == 0:
         print("  [info] No history available yet — collection is empty.")

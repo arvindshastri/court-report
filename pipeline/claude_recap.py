@@ -227,6 +227,34 @@ def generate_game_card_recap(game):
     return message.content[0].text
 
 
+def generate_chat_response(question, context, history):
+    CHAT_SYSTEM_PROMPT = (
+        "You are Court Report, a sharp NBA analyst. Answer the user's question using only the "
+        "context provided from recent games and conversation history. Be specific and concise — "
+        "2-3 sentences maximum. If the context doesn't contain enough information to answer, "
+        "say so honestly rather than guessing. "
+        "If the user refers to a player by nickname, abbreviation, or first name only, use your "
+        "knowledge of the NBA to identify the full player name being referenced, then find that "
+        "player in the provided context."
+    )
+
+    messages = []
+    for msg in history[-6:]:
+        messages.append({"role": msg["role"], "content": msg["content"]})
+
+    user_content = f"Context from recent games:\n{context}\n\nQuestion: {question}"
+    messages.append({"role": "user", "content": user_content})
+
+    response = client.messages.create(
+        model="claude-haiku-4-5-20251001",
+        max_tokens=300,
+        system=CHAT_SYSTEM_PROMPT,
+        messages=messages,
+    )
+
+    return response.content[0].text
+
+
 def format_recap_for_storage(game, recap_text, game_date):
     home = game["home_team"]
     away = game["away_team"]
