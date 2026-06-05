@@ -1,21 +1,26 @@
 function parsePlayer(str) {
   if (!str) return null
   // e.g. "🏆 Jalen Brunson — 30 PTS, 3 REB, 2 AST | reason text"
-  const pipeIdx = str.indexOf('|')
-  const left = pipeIdx !== -1 ? str.slice(0, pipeIdx).trim() : str.trim()
-  const reason = pipeIdx !== -1 ? str.slice(pipeIdx + 1).trim() : ''
 
-  // Strip leading emoji + badge
-  const dashIdx = left.indexOf('—')
+  // Split on ' | ' first to isolate stats side from reason
+  const pipeIdx = str.indexOf(' | ')
+  const left   = pipeIdx !== -1 ? str.slice(0, pipeIdx).trim() : str.trim()
+  const reason = pipeIdx !== -1 ? str.slice(pipeIdx + 3).trim() : ''
+
+  // Strip leading emoji/badge, split on ' — ' to get name vs stats
+  const dashIdx = left.indexOf(' — ')
   const name = dashIdx !== -1
     ? left.slice(0, dashIdx).replace(/^[^\w]+/, '').trim()
     : left.replace(/^[^\w]+/, '').trim()
 
-  const statsRaw = dashIdx !== -1 ? left.slice(dashIdx + 1).trim() : ''
+  // Everything after ' — ', then drop any trailing " on X% FG"-style clause
+  const statsRaw = dashIdx !== -1
+    ? left.slice(dashIdx + 3).replace(/\s+on\s+[\d.]+%[^,]*/gi, '').trim()
+    : ''
 
   // Parse stat tokens like "30 PTS, 3 REB, 2 AST, +22 +/-"
   const stats = []
-  const tokens = statsRaw.split(',').map(s => s.trim())
+  const tokens = statsRaw.split(',').map(s => s.trim()).filter(Boolean)
   for (const t of tokens) {
     const parts = t.split(/\s+/)
     if (parts.length >= 2) {

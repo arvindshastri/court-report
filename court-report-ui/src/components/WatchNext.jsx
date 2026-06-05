@@ -6,13 +6,15 @@ export default function WatchNext({ watch_next }) {
 
   let matchup = ''
   let date = ''
-  let copy = watch_next
+  let copy = ''
 
   if (vsMatch) {
     matchup = vsMatch[1].trim()
     date = vsMatch[2] ? vsMatch[2].trim() : ''
     const rawCopy = vsMatch[3] ? vsMatch[3].trim() : ''
     copy = rawCopy.charAt(0).toUpperCase() + rawCopy.slice(1)
+  } else {
+    copy = watch_next
   }
 
   return (
@@ -24,7 +26,6 @@ export default function WatchNext({ watch_next }) {
       )}
       {date && <div className="w-date">{date}</div>}
       {copy && <div className="w-copy">{copy}</div>}
-      {!matchup && <div className="w-copy">{watch_next}</div>}
     </div>
   )
 }

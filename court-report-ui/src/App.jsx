@@ -58,7 +58,7 @@ export default function App() {
       <Masthead date={digest.date} />
       <Ticker games={digest.games || []} />
       <div className="wrap">
-        <Story story={digest.story} kicker={`Story of the Night — ${digest.date || ''}`} />
+        <Story story_headline={digest.story_headline} story_body={digest.story_body} kicker={`Story of the Night — ${digest.date || ''}`} />
         <Players players={digest.players || {}} />
         <Numbers by_the_numbers={digest.by_the_numbers || []} />
         <div className="games">

@@ -143,6 +143,79 @@ def store_player_game_stats(games, game_date):
     print(f"  [player stats] Stored {stored} player-game document(s), skipped {skipped} duplicate(s).")
 
 
+def delete_season_averages(season):
+    """
+    Delete all documents from Chroma where metadata type='season_averages'
+    and season matches the given season string (e.g. '2024-25').
+    Prints document count before and after.
+    """
+    vs = get_vectorstore()
+    before = vs._collection.count()
+    print(f"  [delete_season_averages] Total docs before: {before}")
+
+    results = vs.get(where={"$and": [{"type": "season_averages"}, {"season": season}]})
+    ids_to_delete = results.get("ids", [])
+
+    if ids_to_delete:
+        vs.delete(ids=ids_to_delete)
+        print(f"  [delete_season_averages] Deleted {len(ids_to_delete)} document(s) for season {season}.")
+    else:
+        print(f"  [delete_season_averages] No documents found for season {season}.")
+
+    after = vs._collection.count()
+    print(f"  [delete_season_averages] Total docs after: {after}")
+
+
+def store_season_averages(players, season="2025-26"):
+    """
+    Store one Chroma document per player containing their season averages.
+    Skips duplicates by document ID.
+    """
+    vs = get_vectorstore()
+    stored = 0
+    skipped = 0
+
+    for p in players:
+        player_name = p["player_name"]
+        team        = p["team"]
+        gp          = p.get("gp", 0)
+        pts         = p.get("pts", 0)
+        reb         = p.get("reb", 0)
+        ast         = p.get("ast", 0)
+        stl         = p.get("stl", 0)
+        blk         = p.get("blk", 0)
+        fg_pct      = p.get("fg_pct", 0)
+        fg3_pct     = p.get("fg3_pct", 0)
+        ft_pct      = p.get("ft_pct", 0)
+
+        document = (
+            f"{player_name} | {team} | {season} season averages | "
+            f"{pts} PPG {reb} RPG {ast} APG {stl} SPG {blk} BPG "
+            f"{fg_pct}% FG {fg3_pct}% 3P {ft_pct}% FT | "
+            f"{gp} games played"
+        )
+
+        safe_name = player_name.replace(" ", "_")
+        doc_id    = f"avg_{safe_name}_{season}"
+        metadata  = {
+            "type":        "season_averages",
+            "player_name": player_name,
+            "team":        team,
+            "season":      season,
+        }
+
+        existing = vs.get(ids=[doc_id])
+        if existing and existing.get("ids"):
+            skipped += 1
+            continue
+
+        vs.add_texts(texts=[document], metadatas=[metadata], ids=[doc_id])
+        stored += 1
+
+    print(f"  [season averages] Stored {stored} document(s), skipped {skipped} duplicate(s).")
+    return vs._collection.count()
+
+
 def retrieve_relevant_history(query, n_results=3, vs=None):
     """
     Query the vectorstore for the most semantically similar past recaps.

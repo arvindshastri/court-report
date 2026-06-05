@@ -251,9 +251,23 @@ def run_pipeline():
         text = re.sub(r'\*+', '', text)
         return text.strip()
 
+    # Split story into headline (first **...** sentence) and body (everything after)
+    bold_match = re.search(r'\*\*(.+?)\*\*', story, re.DOTALL)
+    if bold_match:
+        story_headline = bold_match.group(1).strip()
+        story_body     = story[bold_match.end():].strip().lstrip("*").strip()
+    else:
+        # No bold markers — fall back to first sentence as headline
+        first_end = story.search(r'(?<=[.!?])\s+[A-Z]') if hasattr(story, 'search') else -1
+        if first_end == -1:
+            first_end = next((i for i, c in enumerate(story) if c in '.!?' and i + 1 < len(story)), -1)
+        story_headline = clean(story[:first_end + 1]) if first_end != -1 else clean(story)
+        story_body     = clean(story[first_end + 1:]) if first_end != -1 else ''
+
     result = {
         "date":           found_date,
-        "story":          clean(story),
+        "story_headline": clean(story_headline),
+        "story_body":     clean(story_body),
         "players": {
             "top":        clean(top_line),
             "underrated": clean(underrated_line),

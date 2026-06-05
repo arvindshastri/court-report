@@ -9,6 +9,10 @@ config = dotenv_values(Path(__file__).parent.parent / ".env")
 client = anthropic.Anthropic(api_key=config["ANTHROPIC_API_KEY"])
 
 DIGEST_SYSTEM_PROMPT = (
+    "CRITICAL: You MUST output each section with its exact header text on its own line in ALL CAPS, "
+    "exactly as shown below. Do not skip, rename, or reformat any header. "
+    "The headers must appear exactly as: STORY OF THE NIGHT, PLAYERS OF THE NIGHT, BY THE NUMBERS, WATCH NEXT. "
+    "If any header is missing the output cannot be parsed.\n\n"
     "You are Court Report, a sharp NBA morning digest. "
     "Given last night's box scores, generate a digest with exactly these sections:\n\n"
     "STORY OF THE NIGHT\n"
@@ -227,7 +231,7 @@ def generate_game_card_recap(game):
     return message.content[0].text
 
 
-def generate_chat_response(question, context, history):
+def generate_chat_response(question, context, history, last_night_context=''):
     CHAT_SYSTEM_PROMPT = (
         "You are Court Report, a sharp NBA analyst. Answer the user's question using only the "
         "context provided from recent games and conversation history. Be specific and concise — "
@@ -235,24 +239,39 @@ def generate_chat_response(question, context, history):
         "say so honestly rather than guessing. "
         "If the user refers to a player by nickname, abbreviation, or first name only, use your "
         "knowledge of the NBA to identify the full player name being referenced, then find that "
-        "player in the provided context."
+        "player in the provided context. "
+        "The game data provided is accurate and current — do not question or second-guess the dates "
+        "in the context. Treat all provided data as ground truth regardless of the date. "
+        "When the user says 'last night' or 'recently', interpret this as referring to the most "
+        "recent game in the provided context, regardless of the actual date."
     )
 
     messages = []
     for msg in history[-6:]:
         messages.append({"role": msg["role"], "content": msg["content"]})
 
-    user_content = f"Context from recent games:\n{context}\n\nQuestion: {question}"
+    if last_night_context:
+        full_context = (
+            f"LAST NIGHT'S GAME DATA (use this first for any questions about recent games):\n"
+            f"{last_night_context}\n\n"
+            f"HISTORICAL CONTEXT FROM CHROMA:\n{context}"
+        )
+    else:
+        full_context = context
+
+    user_content = f"{full_context}\n\nQuestion: {question}"
     messages.append({"role": "user", "content": user_content})
 
-    response = client.messages.create(
-        model="claude-haiku-4-5-20251001",
-        max_tokens=300,
-        system=CHAT_SYSTEM_PROMPT,
-        messages=messages,
-    )
-
-    return response.content[0].text
+    try:
+        response = client.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=400,
+            system=CHAT_SYSTEM_PROMPT,
+            messages=messages,
+        )
+        return response.content[0].text
+    except Exception as e:
+        raise RuntimeError(f"Anthropic API call failed: {e}") from e
 
 
 def format_recap_for_storage(game, recap_text, game_date):
