@@ -27,9 +27,7 @@ export default function App() {
   if (error) {
     return (
       <>
-        <div className="masthead">
-          <div className="mast-center"><div className="logo">COURT<span>REPORT</span></div></div>
-        </div>
+        <Masthead />
         <div className="error-screen">
           <div className="error-text">Failed to load digest</div>
           <div style={{ fontFamily: 'Barlow Condensed', fontSize: 13, color: 'var(--muted)' }}>{error}</div>
@@ -42,11 +40,11 @@ export default function App() {
   if (!digest) {
     return (
       <>
-        <div className="masthead">
-          <div className="mast-center"><div className="logo">COURT<span>REPORT</span></div></div>
-        </div>
+        <Masthead />
         <div className="loading-screen">
-          <div className="loading-text">Generating your Court Report...</div>
+          <div className="loading-text">Generating your Court Report</div>
+          <div className="loading-sub">Pulling box scores, player stats, and storylines from last night's games&hellip;</div>
+          <div className="loading-bar"><div className="loading-bar-fill"></div></div>
         </div>
         <Chat />
       </>
@@ -59,7 +57,7 @@ export default function App() {
       <Ticker games={digest.games || []} />
       <div className="wrap">
         <Story story_headline={digest.story_headline} story_body={digest.story_body} kicker={`Story of the Night — ${digest.date || ''}`} />
-        <Players players={digest.players || {}} />
+        <Players players={digest.players || {}} games={digest.games || []} />
         <Numbers by_the_numbers={digest.by_the_numbers || []} />
         <div className="games">
           <div className="rh">
@@ -75,7 +73,7 @@ export default function App() {
             <span className="rh-label">Watch Next</span>
             <div className="rh-line"></div>
           </div>
-          <WatchNext watch_next={digest.watch_next} />
+          <WatchNext watch_next={digest.watch_next} upcoming_games={digest.upcoming_games || []} />
         </div>
       </div>
       <Chat />

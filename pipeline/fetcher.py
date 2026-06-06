@@ -52,6 +52,7 @@ def parse_games(games):
                 "city":     t["teamCity"],
                 "name":     t["teamName"],
                 "tricode":  t["teamTricode"],
+                "team_id":  t.get("teamId"),
                 "score":    t["score"],
                 "wins":     t["wins"],
                 "losses":   t["losses"],
@@ -151,6 +152,7 @@ def get_player_stats(game_id):
                 continue
             players.append({
                 "name":          f"{p.get('firstName', '')} {p.get('familyName', '')}".strip(),
+                "person_id":     p.get("personId"),
                 "team_tricode":  team_data.get("teamTricode"),
                 "minutes":       minutes,
                 "points":        s.get("points"),
@@ -195,14 +197,18 @@ def get_upcoming_games():
             games = scoreboard.get_dict()["scoreboard"]["games"]
             for g in games:
                 if g.get("gameStatus") == 1:
-                    upcoming.append({
+                    game_dict = {
                         "scheduled_date": date_str,
                         "home_team": g["homeTeam"]["teamCity"] + " " + g["homeTeam"]["teamName"],
                         "away_team": g["awayTeam"]["teamCity"] + " " + g["awayTeam"]["teamName"],
                         "home_tricode": g["homeTeam"]["teamTricode"],
                         "away_tricode": g["awayTeam"]["teamTricode"],
                         "game_status_text": g.get("gameStatusText", "").strip(),
-                    })
+                    }
+                    series_game_number = g.get("seriesGameNumber")
+                    if series_game_number:
+                        game_dict["series_game_number"] = series_game_number
+                    upcoming.append(game_dict)
         except Exception as e:
             print(f"  [warn] Could not fetch upcoming games for {date_str}: {e}")
     return upcoming

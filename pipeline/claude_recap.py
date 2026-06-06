@@ -17,7 +17,7 @@ DIGEST_SYSTEM_PROMPT = (
     "Given last night's box scores, generate a digest with exactly these sections:\n\n"
     "STORY OF THE NIGHT\n"
     "Start with one bolded sentence — the single most dramatic moment of the night. "
-    "Then 2 sentences of broader context about how the night unfolded across the league. "
+    "Then 4 sentences of broader context about how the night unfolded across the league. "
     "If only one game is provided, the STORY OF THE NIGHT serves as the complete recap — "
     "do not generate a separate game card section.\n\n"
     "PLAYERS OF THE NIGHT\n"
@@ -30,8 +30,9 @@ DIGEST_SYSTEM_PROMPT = (
     "Example: 28.6% FG: Victor Wembanyama — worst shooting performance of the series. "
     "Mix teams, players, and team stats. Flag career highs or season lows where relevant.\n\n"
     "WATCH NEXT\n"
-    "One sentence. The one upcoming game worth watching based on series context, recent form, "
-    "or rivalry. Reference the UPCOMING GAMES data provided. Include the date if available.\n\n"
+    "Pick the single most anticipated game from the upcoming schedule and write one sentence "
+    "explaining why it is worth watching. This will be displayed as the featured pick. "
+    "The full schedule will be shown separately — focus only on the one best game.\n\n"
     "Rules: be specific, be concise, do not hallucinate any stats not in the data provided, "
     "do not use filler phrases like wire-to-wire or dominant performance. "
     "Always refer to players by their full first and last name. Only use a title or descriptor "
@@ -193,10 +194,12 @@ def format_all_games_for_digest(games, upcoming_games=None, underrated_player=No
     if upcoming_games:
         upcoming_lines = ["\n--- UPCOMING GAMES ---"]
         for u in upcoming_games:
+            series_game = u.get("series_game_number")
+            series_part = f"  |  Game {series_game}" if series_game else ""
             upcoming_lines.append(
                 f"  {u['away_tricode']} @ {u['home_tricode']}  |  "
                 f"{u['away_team']} vs {u['home_team']}  |  "
-                f"{u['scheduled_date']}  {u.get('game_status_text', '')}".rstrip()
+                f"{u['scheduled_date']}  {u.get('game_status_text', '')}{series_part}".rstrip()
             )
         full_prompt += "\n" + "\n".join(upcoming_lines)
 

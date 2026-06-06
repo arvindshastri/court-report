@@ -159,6 +159,26 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;min-h
 .p-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px}
 .p-card.top::before{background:var(--gold)}
 .p-card.und::before{background:#1A5C4A}
+.p-head-row{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:7px;
+}
+.p-head-row .p-name{margin-bottom:0}
+.p-headshot{
+  width:48px;height:48px;
+  border-radius:50%;
+  object-fit:cover;
+  border:var(--bw) solid var(--ink);
+  flex-shrink:0;
+  background:var(--cream);
+}
+.p-headshot-fallback{
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:16px;font-weight:800;letter-spacing:0.05em;
+  color:var(--ink);
+  background:var(--gold);
+}
 .p-badge{
   font-family:'Barlow Condensed',sans-serif;
   font-size:12px;font-weight:800;
@@ -191,9 +211,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;min-h
   background:var(--card);
   box-shadow:var(--shadow);
   padding:16px;
-  display:grid;
-  grid-template-columns:auto 1fr;
-  gap:14px;
+  display:flex;
+  grid-template-columns:118px 1fr;
+  gap:24px;
   align-items:center;
   transition:transform 0.15s,box-shadow 0.15s,background 0.15s;
   cursor:default;
@@ -207,10 +227,17 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;min-h
 .num-card:hover .num-ctx{color:var(--ink)}
 .num-fig{
   font-family:'Bebas Neue',sans-serif;
-  font-size:38px;line-height:1;
+  font-size:38px;line-height:0.95;
   color:var(--red);
-  white-space:nowrap;
-  word-break:break-word;
+  flex:0 0 auto;         
+  max-width:45%;         
+  text-align:left;
+  overflow-wrap:break-word;
+  word-break:normal;
+}
+.num-right{
+  flex:1 1 0;           
+  min-width:0;          
 }
 .num-who{
   font-family:'Barlow Condensed',sans-serif;
@@ -240,15 +267,16 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;min-h
 .gcard-head:hover{background:inherit}
 .g-label{
   font-family:'Barlow Condensed',sans-serif;
-  font-size:12px;font-weight:700;
+  font-size:14px;font-weight:700;
   letter-spacing:0.12em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:6px;
+  color:var(--muted);margin-bottom:10px;
 }
 .g-score{
   font-family:'Bebas Neue',sans-serif;
   font-size:32px;letter-spacing:2px;line-height:1;
-  display:flex;align-items:baseline;gap:10px;
+  display:flex;align-items:center;gap:10px;
 }
+.g-w,.g-l{display:inline-flex;align-items:center;gap:8px}
 .g-w{color:var(--ink)}
 .g-win-score{
   color:var(--red);
@@ -258,13 +286,18 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;min-h
 .g-l{color:var(--muted)}
 .g-los-score{color:var(--muted)}
 .g-btn{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:11px;font-weight:700;
-  letter-spacing:0.12em;text-transform:uppercase;
-  color:var(--muted);border:var(--bw) solid var(--rule);
-  padding:5px 11px;background:transparent;
-  cursor:pointer;transition:all 0.15s;white-space:nowrap;
+  display:flex;align-items:center;justify-content:center;
+  width:30px;height:30px;
+  background:transparent;
+  border:1.5px solid var(--rule);
+  border-radius:2px;
+  cursor:pointer;
+  transition:all 0.15s;
+  color:var(--muted);
+  padding:0;flex-shrink:0;
 }
+.g-btn svg{display:block}
+.g-btn:hover{border-color:var(--ink);color:var(--ink)}
 .gcard.open .g-btn{background:var(--ink);color:var(--cream);border-color:var(--ink)}
 .gcard-body{
   max-height:0;overflow:hidden;
@@ -275,8 +308,93 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;min-h
   padding:16px 18px;font-size:15px;
   line-height:1.7;color:#3D3830;
   border-top:var(--bw) solid var(--rule);
-  background:var(--bg);
+  background:var(--card);
 }
+.gcard.open .gcard-body{max-height:1400px}
+
+.team-logo{
+  display:inline-block;
+  width:32px;height:32px;
+  object-fit:contain;
+}
+
+/* ── QUARTER SCORES TABLE ── */
+.qtr-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:18px;
+  font-family:'Barlow Condensed',sans-serif;
+}
+.qtr-table th{
+  font-size:11px;font-weight:800;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);
+  padding:6px 8px;
+  text-align:center;
+  border-bottom:var(--bw) solid var(--ink);
+}
+.qtr-table th:first-child{text-align:left}
+.qtr-table td{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:18px;letter-spacing:0.5px;
+  padding:8px;text-align:center;
+  border-bottom:1px solid var(--rule);
+  color:var(--ink);
+}
+.qtr-table tr:last-child td{border-bottom:none}
+.qtr-tri{
+  text-align:left !important;
+  font-weight:800;letter-spacing:1px;
+  color:var(--ink);
+}
+.qtr-record{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:600;letter-spacing:0.04em;
+  color:var(--muted);
+  margin-left:8px;
+  vertical-align:middle;
+}
+.qtr-total{
+  color:var(--red);
+  font-size:20px;
+}
+
+/* ── TOP PLAYERS TABLE ── */
+.tp-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:20px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:13px;
+}
+.tp-table th{
+  font-size:10px;font-weight:800;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);
+  padding:6px 6px;
+  text-align:center;
+  border-bottom:var(--bw) solid var(--ink);
+}
+.tp-table th:first-child{text-align:left}
+.tp-table td{
+  padding:7px 6px;
+  text-align:center;
+  border-bottom:1px solid var(--rule);
+  color:#3D3830;
+  font-weight:600;
+}
+.tp-table tr:last-child td{border-bottom:none}
+.tp-th-name{text-align:left}
+.tp-name{
+  text-align:left !important;
+  font-weight:800;color:var(--ink);
+  white-space:nowrap;
+  display:flex;align-items:center;gap:8px;
+}
+.tp-name .team-logo{width:20px;height:20px}
+.tp-pos{color:#1A5C4A;font-weight:800}
+.tp-neg{color:var(--red);font-weight:800}
+.tp-gmsc{color:var(--red);font-weight:800}
 
 /* ── WATCH NEXT ── */
 .watch{
@@ -288,31 +406,78 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;min-h
   transition:transform 0.15s,box-shadow 0.15s;
 }
 .watch:hover{transform:translate(-2px,-2px);box-shadow:var(--shadow-lg)}
-.watch::before{
-  content:'⚡';position:absolute;
-  right:20px;top:14px;font-size:64px;
-  opacity:0.06;pointer-events:none;
-}
 .w-eyebrow{
   font-family:'Barlow Condensed',sans-serif;
   font-size:17px;font-weight:800;
   letter-spacing:0.2em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:6px;
+  color:var(--muted);
+  margin-bottom:12px;
 }
+.w-featured-head{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:8px 16px;
+  margin-bottom:16px;
+}
+.w-game-line{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:16px;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;
+}
+.w-featured-head .w-countdown{transform:translateY(2px)}
 .w-matchup{
   font-family:'Barlow Condensed',sans-serif;
   font-size:26px;font-weight:800;font-style:italic;
   color:var(--ink);line-height:1.1;margin-bottom:4px;
 }
-.w-date{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:15px;font-weight:700;
-  letter-spacing:0.1em;text-transform:uppercase;
-  color:var(--red);margin-bottom:12px;
-}
 .w-copy{
   font-size:15px;line-height:1.7;
   color:var(--muted);
+}
+.w-countdown{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:15px;font-weight:600;font-style:italic;
+  letter-spacing:0.04em;
+  line-height:1;
+  color:var(--muted);
+}
+.w-countdown strong{
+  display:inline-block;
+  font-family:'Bebas Neue',sans-serif;
+  font-style:normal;font-weight:400;
+  font-size:20px;letter-spacing:0.5px;line-height:1;
+  color:var(--red);
+  transform:translateY(1px);
+}
+.w-countdown-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--red);
+  animation:bp 2s ease-in-out infinite;
+  flex-shrink:0;
+}
+.w-divider{
+  height:1px;
+  background:var(--rule);
+  margin:20px 0 14px;
+}
+.w-schedule{
+  display:flex;flex-direction:column;
+}
+.w-row{
+  display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  padding:9px 0;
+  border-bottom:1px solid var(--rule);
+  font-family:'Barlow Condensed',sans-serif;
+}
+.w-row:last-child{border-bottom:none}
+.w-row-matchup{
+  font-size:16px;font-weight:700;letter-spacing:0.04em;
+  color:var(--ink);
+}
+.w-row-meta{
+  font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--muted);
+  white-space:nowrap;
 }
 
 /* ── FLOATING CHAT ── */
@@ -378,10 +543,10 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;min-h
   max-height:0;
   transition:max-height 0.35s cubic-bezier(0.4,0,0.2,1);
 }
-.chat-panel.open{max-height:520px}
+.chat-panel.open{max-height:50vh}
 
 .chat-msgs{
-  max-height:420px;overflow-y:auto;
+  height:calc(50vh - 58px);overflow-y:auto;
   padding:12px 16px;display:flex;flex-direction:column;gap:8px;
   background:var(--bg);
 }
@@ -436,15 +601,41 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;min-h
 
 /* ── LOADING / ERROR ── */
 .loading-screen{
-  display:flex;align-items:center;justify-content:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;
   min-height:60vh;
+  text-align:center;
+  padding:0 28px;
 }
 .loading-text{
   font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(28px,4vw,48px);
-  letter-spacing:4px;
+  font-size:clamp(26px,4vw,42px);
+  letter-spacing:3px;
   color:var(--ink);
-  opacity:0.5;
+}
+.loading-sub{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:15px;font-weight:600;
+  letter-spacing:0.04em;
+  color:var(--muted);
+  max-width:380px;
+}
+.loading-bar{
+  width:260px;height:8px;
+  margin-top:10px;
+  background:var(--rule);
+  overflow:hidden;
+  position:relative;
+}
+.loading-bar-fill{
+  position:absolute;top:0;bottom:0;left:0;
+  width:40%;
+  background:linear-gradient(90deg,var(--gold),var(--red));
+  animation:loading-sweep 1.6s ease-in-out infinite;
+}
+@keyframes loading-sweep{
+  0%{left:-40%}
+  100%{left:100%}
 }
 .error-screen{
   display:flex;align-items:center;justify-content:center;

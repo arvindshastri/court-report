@@ -164,28 +164,78 @@ def run_pipeline():
     # --- Per-game card recaps (skip if only 1 game) ---
     card_recaps = {}
     game_cards = []
-    if len(enriched_games) > 1:
-        for game in enriched_games:
-            home = game["home_team"]
-            away = game["away_team"]
-            matchup = (
-                f"{away['city']} {away['name']} {away['score']}  @  "
-                f"{home['city']} {home['name']} {home['score']}"
-            )
-            card_recap = generate_game_card_recap(game)
-            game["card_recap"] = card_recap
-            card_recaps[game["game_id"]] = card_recap
-            game_cards.append({"matchup": matchup, "card_recap": card_recap})
-    else:
-        g = enriched_games[0]
-        home, away = g["home_team"], g["away_team"]
+
+    def _build_team_dict(t):
+        return {
+            "name":    f"{t['city']} {t['name']}",
+            "tricode": t["tricode"],
+            "team_id": t.get("team_id"),
+            "score":   t["score"],
+            "wins":    t.get("wins"),
+            "losses":  t.get("losses"),
+            "quarters": t["quarters"],
+        }
+
+    def _build_top_players(game):
+        ps = game.get("player_stats", {})
+        home_tricode = game["home_team"]["tricode"]
+        away_tricode = game["away_team"]["tricode"]
+        home_name = f"{game['home_team']['city']} {game['home_team']['name']}"
+        away_name = f"{game['away_team']['city']} {game['away_team']['name']}"
+        tricode_to_team = {home_tricode: home_name, away_tricode: away_name}
+
+        all_players = []
+        for p in ps.get("home_players", []) + ps.get("away_players", []):
+            if p.get("game_score") is not None:
+                all_players.append(p)
+
+        top5 = sorted(all_players, key=lambda p: p["game_score"], reverse=True)[:5]
+        result = []
+        for p in top5:
+            tricode = p.get("team_tricode", "")
+            fg_pct = p.get("fg_pct")
+            result.append({
+                "name":       p["name"],
+                "person_id":  p.get("person_id"),
+                "team":       tricode_to_team.get(tricode, tricode),
+                "pts":        p.get("points"),
+                "reb":        p.get("rebounds"),
+                "ast":        p.get("assists"),
+                "stl":        p.get("steals"),
+                "blk":        p.get("blocks"),
+                "fg_pct":     round(fg_pct, 3) if fg_pct is not None else None,
+                "plus_minus": p.get("plus_minus"),
+                "game_score": p["game_score"],
+                "minutes":    p.get("minutes"),
+            })
+        return result
+
+    def _build_game_card(game, card_recap):
+        home = game["home_team"]
+        away = game["away_team"]
         matchup = (
             f"{away['city']} {away['name']} {away['score']}  @  "
             f"{home['city']} {home['name']} {home['score']}"
         )
+        return {
+            "matchup":     matchup,
+            "card_recap":  card_recap,
+            "home_team":   _build_team_dict(home),
+            "away_team":   _build_team_dict(away),
+            "top_players": _build_top_players(game),
+        }
+
+    if len(enriched_games) > 1:
+        for game in enriched_games:
+            card_recap = generate_game_card_recap(game)
+            game["card_recap"] = card_recap
+            card_recaps[game["game_id"]] = card_recap
+            game_cards.append(_build_game_card(game, card_recap))
+    else:
+        g = enriched_games[0]
         card_recaps[g["game_id"]] = ""
         g["card_recap"] = ""
-        game_cards.append({"matchup": matchup, "card_recap": ""})
+        game_cards.append(_build_game_card(g, ""))
 
     # --- Store tonight's recaps in Chroma ---
     print("Storing recaps to Chroma...\n")
@@ -274,6 +324,18 @@ def run_pipeline():
         },
         "by_the_numbers": bullets,
         "watch_next":     clean(watch_next),
+        "upcoming_games": [
+            {
+                "away_team":          u.get("away_team"),
+                "home_team":          u.get("home_team"),
+                "away_tricode":       u.get("away_tricode"),
+                "home_tricode":       u.get("home_tricode"),
+                "scheduled_date":     u.get("scheduled_date"),
+                "game_status_text":   u.get("game_status_text"),
+                **({"series_game_number": u["series_game_number"]} if u.get("series_game_number") else {}),
+            }
+            for u in upcoming
+        ],
         "games":          game_cards,
     }
 
