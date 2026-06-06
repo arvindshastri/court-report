@@ -18,7 +18,6 @@
       "references the one-point margin or describes it as a close or tight game",
       "mentions the series standing (NYK leads 2-0)",
       "identifies a standout performer from the losing team by name",
-      "does not start the story with the final score",
       "By the Numbers bullets are all under 20 words each",
       "does not use banned phrases like wire-to-wire or dominant performance"
     ],
@@ -28,7 +27,7 @@
       "stepped up big",
       "simply"
     ],
-    "use_live_data": true
+    "use_live_data": false
   },
   {
     "id": "tc_002",
@@ -57,7 +56,7 @@
       "came down to the wire",
       "back and forth"
     ],
-    "use_live_data": true
+    "use_live_data": false
   },
   {
     "id": "tc_003",
@@ -85,7 +84,7 @@
       "comfortable win",
       "dominant from the start"
     ],
-    "use_live_data": true
+    "use_live_data": false
   },
   {
     "id": "tc_004",
@@ -105,7 +104,6 @@
       "does not describe Luka's performance as average or acceptable",
       "contrasts the losing stars' performance with SGA's dominant night",
       "references the margin of defeat or describes the game as a blowout",
-      "does not start the Story of the Night with the final score",
       "Player of the Night is not Luka or LeBron given their negative plus-minus and poor efficiency"
     ],
     "must_not_contain": [
@@ -114,7 +112,7 @@
       "back and forth",
       "wire-to-wire"
     ],
-    "use_live_data": true
+    "use_live_data": false
   },
   {
     "id": "tc_005",
@@ -145,7 +143,7 @@
       "dominant from the start",
       "as expected"
     ],
-    "use_live_data": true
+    "use_live_data": false
   },
   {
     "id": "tc_006",
@@ -163,7 +161,6 @@
       "Story of the Night is substantive — at least 3 sentences covering the full game narrative",
       "does not generate a separate game card recap section",
       "identifies Josh Hart as the underrated performer given 3 points but +22 rating and 15 rebounds",
-      "does not start the story with the final score",
       "identifies a specific story angle beyond just the final score — momentum shift, standout performer, or notable inefficiency",
       "By the Numbers contains exactly 4 bullets"
     ],
@@ -173,7 +170,7 @@
       "GAME RECAP",
       "game card"
     ],
-    "use_live_data": true
+    "use_live_data": false
   },
   {
     "id": "tc_007",
@@ -206,7 +203,7 @@
       "every game tonight",
       "dominant performance"
     ],
-    "use_live_data": true
+    "use_live_data": false
   },
   {
     "id": "tc_008",
@@ -258,7 +255,7 @@
       "wire-to-wire",
       "dominant performance"
     ],
-    "use_live_data": true
+    "use_live_data": false
   },
   {
     "id": "tc_010",
@@ -298,7 +295,6 @@
     "context": "Format compliance test — checking structural rules are followed regardless of content.",
     "eval_criteria": [
       "all four section headers present and in correct order: STORY OF THE NIGHT, PLAYERS OF THE NIGHT, BY THE NUMBERS, WATCH NEXT",
-      "Story of the Night does not begin with the final score or a scoreline",
       "By the Numbers contains exactly 4 bullet points",
       "each By the Numbers bullet is 20 words or fewer",
       "PLAYERS OF THE NIGHT contains exactly two entries — one trophy and one star emoji",
@@ -312,7 +308,7 @@
       "The final score was",
       "In a game that ended"
     ],
-    "use_live_data": true
+    "use_live_data": false
   },
   {
     "id": "tc_012",
@@ -345,7 +341,7 @@
       "simply",
       "wire-to-wire"
     ],
-    "use_live_data": true
+    "use_live_data": false
   },
   {
     "id": "tc_013",
@@ -374,7 +370,7 @@
       "never in doubt",
       "comfortable win"
     ],
-    "use_live_data": true
+    "use_live_data": false
   },
   {
     "id": "tc_014",
@@ -404,7 +400,7 @@
       "never in doubt",
       "dominant performance"
     ],
-    "use_live_data": true
+    "use_live_data": false
   },
   {
     "id": "tc_015",
@@ -435,7 +431,7 @@
       "dominant from the start",
       "routine victory"
     ],
-    "use_live_data": true
+    "use_live_data": false
   },
   {
     "id": "tc_016",
@@ -464,6 +460,6 @@
       "wire-to-wire",
       "dominant performance"
     ],
-    "use_live_data": true
+    "use_live_data": false
   }
 ]

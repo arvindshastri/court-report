@@ -1,0 +1,758 @@
+Loaded 16 test cases from C:\Users\arvin\CourtReport\evals\test_cases.json
+
+
+Running tc_001: Close game â€” one point margin, playoff series context
+
+============================================================
+TEST CASE: tc_001 — Close game â€” one point margin, playoff series context
+============================================================
+
+--- GENERATED DIGEST ---
+STORY OF THE NIGHT
+
+**The Knicks survived Victor Wembanyama's 29-point masterpiece to steal Game 2 in San Antonio, 105-104, pushing their Finals lead to 2-0 with a one-point escape.** New York's defense suffocated the Spurs down the stretch despite Wembanyama's efficient 52.4% shooting, while Dylan Harper's bench spark and Karl-Anthony Towns' rebounding anchored the visitors. San Antonio had every chance to even the series at home but could not find enough scoring beyond their generational talent.
+
+PLAYERS OF THE NIGHT
+
+🏆 Victor Wembanyama — 29 PTS, 9 REB, 4 BLK on 52.4% FG | His efficient scoring was wasted on a losing effort, nearly single-handedly keeping the Spurs alive in a Finals game they desperately needed.
+
+⭐ Karl-Anthony Towns — 13 REB, 66.7% FG | Underrated: Towns' rebounding and field goal percentage directly enabled New York's one-point survival, yet his name will be overshadowed by the Wembanyama highlight reel.
+
+BY THE NUMBERS
+
+• 29 PTS: Victor Wembanyama — most efficient scoring output of the Finals so far, yet San Antonio still fell one point short.
+• 5 STL: Jalen Brunson — steals highlight his defense despite shooting just 28.0% from the field in a poor offensive night.
+• +12: Dylan Harper — bench scorer outpaced Knicks reserves to provide crucial offensive punch when starters struggled.
+• 23 PTS: San Antonio fourth quarter — season-low fourth-quarter output doomed the Spurs' comeback bid at home.
+
+WATCH NEXT
+
+Game 3 on June 7 in New York is a must-win for San Antonio; the Spurs have never recovered from an 0-3 Finals deficit.
+--- END DIGEST ---
+
+  [PASS] references the one-point margin or describes it as a close or tight game
+         The digest explicitly mentions 'one-point escape' and '105-104' final score, clearly establishing the close nature of the game.
+  [PASS] mentions the series standing (NYK leads 2-0)
+         The opening sentence states 'pushing their Finals lead to 2-0' which clearly identifies the series standing.
+  [PASS] identifies a standout performer from the losing team by name
+         Victor Wembanyama is named and highlighted as the standout performer from the losing Spurs with 29 points and detailed analysis.
+  [PASS] does not start the story with the final score
+         The story begins with narrative context ('The Knicks survived') before mentioning the score, avoiding a direct score-first opening.
+  [FAIL] By the Numbers bullets are all under 20 words each
+         The second bullet contains 23 words: '5 STL: Jalen Brunson — steals highlight his defense despite shooting just 28.0% from the field in a poor offensive night.'
+  [PASS] does not use banned phrases like wire-to-wire or dominant performance
+         The digest does not contain any instances of 'wire-to-wire', 'dominant performance', 'stepped up big', or 'simply'.
+
+  No banned phrase violations.
+
+  SCORE: 83.0/100
+  SUMMARY: The digest effectively captures the tight one-point victory and series standing while highlighting key performers from both teams. However, one bullet point in the 'By the Numbers' section exceeds the 20-word limit, preventing a perfect score. Overall, the digest meets nearly all evaluation criteria with strong narrative structure and appropriate statistical highlights.
+
+Running tc_002: Blowout â€” 52-point margin, late season seeding implications
+
+============================================================
+TEST CASE: tc_002 — Blowout â€” 52-point margin, late season seeding implications
+============================================================
+
+--- GENERATED DIGEST ---
+STORY OF THE NIGHT
+
+**Toronto demolished Orlando 139-87, a 52-point blowout that was decided by halftime as the Raptors' suffocating defense and efficient offense created a complete mismatch.** The win secured Toronto's grip on top-6 seeding with a dominant performance across all four quarters. Orlando never threatened, managing just 87 points in a thoroughly one-sided affair.
+
+PLAYERS OF THE NIGHT
+
+🏆 RJ Barrett — 24 PTS, 3 REB, 3 AST, 3 STL | +34 | Barrett's efficient scoring and lockdown perimeter defense anchored Toronto's offensive and defensive balance in a game that got out of hand early.
+
+⭐ Scottie Barnes — 23 PTS, 5 REB, 15 AST, 3 STL | Underrated: Barnes posted a career-high 15 assists while maintaining his scoring touch, yet his name-recognition gap means his all-around brilliance often plays second fiddle to his raw point totals.
+
+BY THE NUMBERS
+
+• 52-point margin: Toronto Raptors — largest victory of the season by either team
+• 15 AST: Scottie Barnes — career-high, fourth straight double-digit assist game
+• +47: Sandro Mamukelashvili — best individual plus-minus of the night despite limited minutes
+• 87 PTS: Orlando Magic — season low for a full game
+
+WATCH NEXT
+
+Toronto hosts Boston on March 31 in a critical top-6 seeding matchup between the Eastern Conference's hottest playoff contenders.
+--- END DIGEST ---
+
+  [PASS] references the dominant margin or describes the game as a blowout
+         The digest explicitly states '52-point blowout' and 'demolished Orlando 139-87' in the opening sentence.
+  [PASS] mentions Scottie Barnes by full name with his assist total or the career-high context
+         Scottie Barnes is mentioned with his full name and includes both '15 AST' and 'career-high 15 assists' context.
+  [PASS] references quarter scores or describes the game as decided by halftime
+         The opening statement explicitly notes the game 'was decided by halftime' as Toronto's defense created a complete mismatch.
+  [PASS] does not describe the game as competitive or close
+         The digest uses language like 'thoroughly one-sided affair' and 'Orlando never threatened,' avoiding any competitive framing.
+  [PASS] identifies at least one stat beyond points — assists, steals, or plus-minus
+         Multiple non-points stats are included: assists (15 AST for Barnes), steals (3 STL for Barrett and Barnes), and plus-minus (+34 for Barrett, +47 for Mamukelashvili).
+  [PASS] By the Numbers includes at least one team-level stat not just individual performers
+         The 'By the Numbers' section includes '52-point margin: Toronto Raptors — largest victory of the season by either team' and '87 PTS: Orlando Magic — season low for a full game,' both team-level stats.
+
+  No banned phrase violations.
+
+  SCORE: 100.0/100
+  SUMMARY: The digest excellently meets all evaluation criteria with a clear emphasis on the dominant blowout victory, featuring prominent coverage of Scottie Barnes' career-high assist performance and comprehensive beyond-points statistics. The language appropriately avoids competitive framing and includes well-balanced team and individual metrics in the By the Numbers section.
+
+Running tc_003: Double overtime â€” WCF Game 1, generational superstar performance
+
+============================================================
+TEST CASE: tc_003 — Double overtime â€” WCF Game 1, generational superstar performance
+============================================================
+
+--- GENERATED DIGEST ---
+STORY OF THE NIGHT
+
+**Victor Wembanyama's 41-point, 24-rebound explosion in double overtime lifted the San Antonio Spurs past the reigning champion Oklahoma City Thunder 122-115 in a WCF Game 1 thriller.** The marathon contest stretched into a second overtime period, with Wembanyama's dominance on both ends of the floor proving decisive in the closing moments. Despite Shai Gilgeous-Alexander's 24 points and 12 assists, the Thunder couldn't contain San Antonio's generational talent when it mattered most.
+
+PLAYERS OF THE NIGHT
+
+🏆 Victor Wembanyama — 41 PTS, 24 REB, 3 BLK | His relentless performance on the glass and in the paint during double overtime secured a pivotal Game 1 victory for the Spurs.
+
+⭐ Dylan Harper — 24 PTS, 11 REB, 6 AST, 7 STL | Underrated: Harper's seven steals and +14 rating in a losing playoff environment suggests his defensive intensity created far more value than his scoring line alone indicates.
+
+BY THE NUMBERS
+
+• 41 PTS, 24 REB: Victor Wembanyama — career-high 41 points in a playoff game, tied with career rebounding peak.
+
+• 2OT: San Antonio Spurs — Game 1 of WCF required double overtime, only the second such occurrence in this series format history.
+
+• -15: Shai Gilgeous-Alexander — reigning champion's leader finished with worst plus-minus despite 12 assists, signaling offensive isolation problems.
+
+• 7 STL: Dylan Harper — career-high steals in a single playoff game, most by a Spurs player this postseason.
+
+WATCH NEXT
+
+San Antonio hosts Oklahoma City in Game 2 on May 20, where the Thunder must solve Victor Wembanyama's interior dominance or risk falling into a series hole against a resurgent Spurs team.
+--- END DIGEST ---
+
+  [PASS] explicitly mentions double overtime – not just overtime or OT
+         The digest explicitly uses 'double overtime' multiple times throughout, including in the headline and By the Numbers section.
+  [PASS] references Wembanyama's points and rebounds as a standout performance
+         Wembanyama's 41 points and 24 rebounds are prominently featured in the Story of the Night headline and Players of the Night section.
+  [PASS] identifies OKC as reigning champions or references the series stakes
+         The digest explicitly refers to Oklahoma City as the 'reigning champion' in the opening headline.
+  [PASS] does not describe the game as decided early or comfortable
+         The digest describes the game as a 'thriller' and 'marathon contest' with decisive moments, avoiding any language suggesting an early or comfortable outcome.
+  [FAIL] By the Numbers references the overtime quarter scores or point differential in OT or 2OT periods
+         The By the Numbers section does not include specific overtime quarter scores or point differential statistics from the OT/2OT periods.
+  [PASS] Story of the Night conveys urgency or high stakes – language reflects a playoff 2OT game
+         The Story of the Night uses language like 'thriller,' 'marathon contest,' 'dominance in closing moments,' and 'pivotal Game 1 victory' that conveys urgency and playoff stakes.
+
+  No banned phrase violations.
+
+  SCORE: 83.0/100
+  SUMMARY: The digest effectively captures the excitement of a double overtime playoff game with strong coverage of Wembanyama's standout performance and clear articulation of the series stakes. However, it falls short by not including specific overtime scoring details or point differentials in the By the Numbers section, which would have provided concrete numerical evidence of the game's competitive nature in the extra periods.
+
+Running tc_004: Player bad night â€” superstar meltdown, blowout loss
+
+============================================================
+TEST CASE: tc_004 — Player bad night â€” superstar meltdown, blowout loss
+============================================================
+
+--- GENERATED DIGEST ---
+STORY OF THE NIGHT
+
+**The Oklahoma City Thunder dismantled the Los Angeles Lakers 139-96, a 43-point blowout that exposed the visiting team's offensive collapse.** Luka Doncic shot 30% from the field and committed six turnovers, while LeBron James added just 13 points on a night when neither star could generate rhythm. The Thunder's depth and defensive intensity turned what could have been a competitive matchup into a rout.
+
+PLAYERS OF THE NIGHT
+
+🏆 Shai Gilgeous-Alexander — 28 PTS 7 REB 7 AST +35 | His balanced scoring and playmaking in the Thunder's dominant interior and perimeter attack defined the blowout margin.
+
+⭐ LeBron James — 13 PTS 6 REB 2 AST -37 | Underrated: Despite his name recognition, James finished with one of the game's worst plus-minus ratings, indicating his absence on both ends of the floor directly contributed to the 43-point deficit.
+
+BY THE NUMBERS
+
+• 30% FG: Luka Doncic — worst shooting performance of the season for the Laker star.
+• 6 TO: Luka Doncic — turnover count exceeded his assists, signaling ball-handling collapse.
+• 139 PTS: Oklahoma City Thunder — dominant offensive output without needing to sustain late-game efforts.
+• +35: Shai Gilgeous-Alexander — career-high plus-minus in a single game performance.
+
+WATCH NEXT
+
+Monitor the Lakers' next matchup to determine if tonight's collapse was a one-game anomaly or evidence of deeper chemistry issues between Luka Doncic and LeBron James.
+--- END DIGEST ---
+
+  [PASS] references Luka Doncic's shooting percentage or turnover total as the story – not just the final score
+         The digest prominently features Doncic's 30% FG and 6 turnovers as key elements of the story, not just the final score.
+  [PASS] does not describe Luka's performance as average or acceptable
+         Doncic's performance is explicitly described as a 'worst shooting performance of the season' and 'ball-handling collapse,' clearly critical language.
+  [PASS] contrasts the losing stars' performance with SGA's dominant night
+         The digest directly contrasts Doncic and LeBron's poor stats with SGA's 28 PTS 7 REB 7 AST +35 performance across multiple sections.
+  [PASS] references the margin of defeat or describes the game as a blowout
+         The digest explicitly states '43-point blowout' in the opening and references '43-point deficit' later.
+  [FAIL] does not start the Story of the Night with the final score
+         The Story of the Night section begins with 'The Oklahoma City Thunder dismantled the Los Angeles Lakers 139-96,' which is the final score.
+  [PASS] Player of the Night is not Luka or LeBron given their negative plus-minus and poor efficiency
+         Shai Gilgeous-Alexander is correctly selected as Player of the Night with a +35 rating, while Doncic and James are listed as secondary entries despite poor performance.
+
+  No banned phrase violations.
+
+  SCORE: 83.0/100
+  SUMMARY: The digest effectively tells the story of the game through Doncic's poor shooting and turnovers while properly contrasting his performance with SGA's dominance and highlighting the blowout margin. However, it violates the structural requirement by opening the Story of the Night with the final score rather than narrative context, which is a significant formatting issue.
+
+Running tc_005: Comeback story â€” 22-point halftime deficit overcome, massive upset, overtime win
+
+============================================================
+TEST CASE: tc_005 — Comeback story â€” 22-point halftime deficit overcome, massive upset, overtime win
+============================================================
+
+--- GENERATED DIGEST ---
+STORY OF THE NIGHT
+**The New Orleans Pelicans, worst team in the league at 6-22, stormed back from a 22-point halftime deficit to stun the Houston Rockets 133-128 in overtime.** Kevin Durant's 32 points and a Rockets roster featuring Alperen Sengun's all-around excellence could not contain New Orleans' second-half surge, led by Saddiq Bey's 29 points and eight steals from Herb Jones. The upset marks one of the season's most dramatic comebacks and a statement that even the league's struggling teams can find moments of brilliance.
+
+PLAYERS OF THE NIGHT
+🏆 Kevin Durant — 32 PTS, 7 REB, 4 BLK, 6 TO | His scoring led all players, but six turnovers and a minus-7 rating in a losing effort underscore Houston's inability to close the game despite his firepower.
+⭐ Saddiq Bey — 29 PTS, 9 REB, 2 STL | Underrated: Bey's plus-21 rating and clutch performance on a 6-22 team reveals a player delivering far more impact than his usage on a dysfunctional roster typically suggests.
+
+BY THE NUMBERS
+• 22-point halftime deficit: New Orleans Pelicans — largest comeback margin of the early season
+• 28 PTS, 11 REB, 8 AST: Alperen Sengun — dominant two-way game on a losing night
+• 8 STL: Herb Jones — defensive maestro in the upset win despite foul trouble
+• 6 TO: Kevin Durant — uncharacteristic turnover rate in high-pressure overtime setting
+
+WATCH NEXT
+New Orleans hosts the next opponent on their schedule to build on this statement win, while Houston must recalibrate with Kevin Durant and urgently address fourth-quarter execution.
+--- END DIGEST ---
+
+  [PASS] references the comeback or the halftime deficit — not just the final score
+         The digest explicitly mentions the '22-point halftime deficit' in the Story of the Night and again in the By the Numbers section.
+  [PASS] identifies this as an upset given the record differential (6-22 vs 16-8)
+         The digest clearly labels this an 'upset' and emphasizes New Orleans as the 'worst team in the league at 6-22' defeating Houston.
+  [PASS] mentions overtime as part of the comeback story
+         The Story of the Night explicitly states the final score as '133-128 in overtime.'
+  [PASS] Player of the Night is from the losing team (Houston) — verifies game score logic over eye test
+         Kevin Durant from Houston is listed as the first Player of the Night with 32 points, the game-high scoring leader.
+  [PASS] does not describe NOP as the expected winner or Houston as the underdog
+         The digest correctly frames New Orleans as the underdog ('worst team in the league') and Houston as the expected winner, never reversing these designations.
+  [PASS] Story of the Night captures the upset angle — language reflects the improbability of the result
+         The language uses 'stormed back,' 'stun,' 'upset,' 'dramatic comebacks,' and 'statement' to convey the improbability and significance of the result.
+
+  No banned phrase violations.
+
+  SCORE: 100.0/100
+  SUMMARY: The digest excellently captures all key elements of this dramatic upset victory, effectively highlighting the 22-point comeback from the league's worst team with appropriate language conveying the improbability of the result. All evaluation criteria are met, and no banned phrases are present.
+
+Running tc_006: Single game night â€” Story of the Night serves as full recap, no game cards
+
+============================================================
+TEST CASE: tc_006 — Single game night â€” Story of the Night serves as full recap, no game cards
+============================================================
+
+--- GENERATED DIGEST ---
+STORY OF THE NIGHT
+
+**Jalen Brunson's 30-point performance lifted the New York Knicks past the San Antonio Spurs 105-95 in NBA Finals Game 1, establishing early control of the series.** The Knicks' perimeter attack overwhelmed San Antonio's defense despite inefficient shooting across both teams, with New York's depth and ball movement proving decisive in the opener. Victor Wembanyama's 26 points on 28.6% shooting showed the Spurs' offensive load tilts heavily toward their young franchise centerpiece, a problem that will need solving if San Antonio hopes to compete in this series.
+
+PLAYERS OF THE NIGHT
+
+🏆 Jalen Brunson — 30 PTS, 3 REB, 2 AST on 38.7% FG | His scoring punch in the Finals' opening game set the tone for New York's road victory.
+
+⭐ Josh Hart — 3 PTS, 15 REB, 6 AST, 4 STL (+22) | Underrated: Hart's impact was far bigger than his point total—his +22 margin and perimeter defense were more valuable than Brunson's higher scoring load suggests.
+
+BY THE NUMBERS
+
+• 30 PTS: Jalen Brunson — game-high scoring output guides Knicks to Finals Game 1 win.
+• 28.6% FG: Victor Wembanyama — worst shooting performance highlights Spurs' offensive struggle.
+• 15 REB: Josh Hart — game-high rebounding and elite two-way effort anchors New York defense.
+• 10-point margin: New York Knicks — Finals Game 1 victory establishes series advantage.
+
+WATCH NEXT
+
+NBA Finals Game 2 between the New York Knicks and San Antonio Spurs will determine whether the Spurs can adjust their isolation-heavy offense or face falling into a 0-2 hole at home.
+--- END DIGEST ---
+
+  [PASS] Story of the Night is substantive – at least 3 sentences covering the full game narrative
+         The Story of the Night contains three substantive sentences covering Brunson's performance, the Knicks' depth advantage, and Wembanyama's offensive load issues.
+  [PASS] does not generate a separate game card recap section
+         There is no separate 'GAME RECAP' or 'game card' section in the digest.
+  [PASS] identifies Josh Hart as the underrated performer given 3 points but +22 rating and 15 rebounds
+         The digest explicitly identifies Josh Hart as 'Underrated' in the Players of the Night section and highlights his impact beyond his 3-point scoring with his +22 margin and 15 rebounds.
+  [FAIL] does not start the story with the final score
+         The Story of the Night begins with 'Jalen Brunson's 30-point performance lifted the New York Knicks past the San Antonio Spurs 105-95,' which immediately states the final score at the opening.
+  [PASS] identifies a specific story angle beyond just the final score – momentum shift, standout performer, or notable inefficiency
+         The digest identifies multiple story angles: Brunson as standout performer, the Knicks' depth and ball movement advantage, and Wembanyama's poor shooting efficiency (28.6%) as a notable inefficiency.
+  [PASS] By the Numbers contains exactly 4 bullets
+         The By the Numbers section contains exactly four bullet points as required.
+
+  No banned phrase violations.
+
+  SCORE: 83.0/100
+  SUMMARY: The digest demonstrates strong content quality with substantive game narrative, proper identification of the underrated performer, and well-structured sections. However, it violates the criterion of not starting the story with the final score, which detracts from the overall quality. The digest successfully avoids all banned phrases and maintains professional formatting throughout.
+
+Running tc_007: Multiple games night â€” 15 games, final night of regular season, playoff seeding implications
+
+============================================================
+TEST CASE: tc_007 — Multiple games night â€” 15 games, final night of regular season, playoff seeding implications
+============================================================
+
+--- GENERATED DIGEST ---
+STORY OF THE NIGHT
+
+**Miami Heat's 26-point demolition of Atlanta Hawks eliminated Atlanta from top-6 contention on the final night of the regular season.** The Eastern Conference seeding race came down to the wire, with multiple franchises fighting for playoff positioning in a chaotic evening across 15 games. Toronto Raptors secured their No. 6 seed with a 35-point blowout victory over Brooklyn, while Charlotte clinched Play-In placement with a win over New York.
+
+PLAYERS OF THE NIGHT
+
+🏆 Baylor Scheierman — 30 PTS 7 REB 7 AST 2 STL | His 30-point performance helped Boston stay competitive in a night when playoff seeding remained unsettled across the East.
+
+⭐ Scottie Barnes — 18 PTS 12 REB 12 AST 3 BLK | Underrated: His triple-double and +35 rating mattered far more to Toronto's 35-point margin than his 18 points suggest, orchestrating the entire offensive flow in a clinching performance.
+
+BY THE NUMBERS
+
+• 26 points: Miami Heat margin over Atlanta — eliminated Hawks from top-6 seed contention on final regular season night
+• 18 PTS: Scottie Barnes on triple-double — lowest scorer among top performers despite best plus-minus of the night
+• 9 teams: Eastern Conference fighting for 6 remaining playoff spots in a single evening across 15 games
+• 25-10-3: Bam Adebayo stat line — Heat's anchor in blowout that sealed Miami's seeding position
+
+WATCH NEXT
+
+The first round matchup between Miami Heat and a top-3 seed will be worth watching, given Miami's statement blowout on the final night and their recent momentum heading into playoffs.
+--- END DIGEST ---
+
+  [PASS] Story of the Night covers the broader narrative of the night — seeding implications — not just one game
+         The digest covers multiple games and focuses on Eastern Conference seeding race implications, including Heat-Hawks, Raptors-Nets, and Hornets-Knicks outcomes.
+  [PASS] Does not recap all 15 games individually — synthesizes the night into key storylines
+         The digest synthesizes the night into seeding implications and key performances rather than recapping individual games.
+  [PASS] Mentions at least one seeding or playoff implication by name
+         Multiple seeding implications are mentioned by name: 'No. 6 seed' for Raptors, 'Play-In placement' for Hornets, and Hawks eliminated from 'top-6 contention.'
+  [PASS] Player of the Night is selected from across all 15 games — not just the first game processed
+         The digest features players from different games (Scheierman from Boston, Barnes from Toronto, Adebayo from Miami), indicating selection from multiple games.
+  [PASS] By the Numbers pulls stats from at least two different games — not all from one game
+         Stats are pulled from multiple games: Miami-Atlanta (26-point margin), Toronto game (Scottie Barnes), and Adebayo's stat line from Miami.
+  [PASS] Mentions at least one triple-double or exceptional plus-minus performance from the night
+         Scottie Barnes' triple-double (18 PTS 12 REB 12 AST) and his exceptional +35 rating are both highlighted.
+
+  No banned phrase violations.
+
+  SCORE: 100.0/100
+  SUMMARY: This digest effectively captures the broader narrative of a playoff seeding-deciding night in the Eastern Conference without listing individual games. It synthesizes key storylines, features players from multiple games, and includes both statistical achievements and playoff implications with proper context.
+
+Running tc_008: No upcoming games â€” day after Finals end, empty schedule
+
+============================================================
+TEST CASE: tc_008 — No upcoming games â€” day after Finals end, empty schedule
+============================================================
+
+--- GENERATED DIGEST ---
+I appreciate the setup, but I need actual box score data to generate a Court Report digest. You've provided the scenario framing (Game 7, Finals, 2025-26 season) but no final score, no player statistics, and no game outcome.
+
+To produce the four required sections with accuracy, I need:
+
+- **Final score** (which team won)
+- **Player stat lines** (at minimum: points, rebounds, assists, FG%, key defensive stats)
+- **Game flow details** (any dramatic moments, comebacks, turning points)
+- **Bench contributions** (role players who mattered)
+
+Once you provide the box score data, I'll deliver:
+- STORY OF THE NIGHT
+- PLAYERS OF THE NIGHT
+- BY THE NUMBERS
+- WATCH NEXT (handling the empty post-Finals schedule gracefully as you noted)
+
+Share the stats and I'll write it.
+--- END DIGEST ---
+
+  [PASS] Watch Next section does not hallucinate a scheduled game
+         No Watch Next section was generated, so no hallucinated games were created.
+  [PASS] Watch Next either says no games scheduled or references Summer League or next season
+         No Watch Next section exists to evaluate, but the response acknowledges the empty post-Finals schedule gracefully.
+  [FAIL] Story of the Night conveys the Finals are over — championship context
+         No Story of the Night section was generated; the response is a metadata request rather than an actual digest.
+  [PASS] Does not generate a Watch Next with a specific tip-off time when no game exists
+         No Watch Next section with tip-off times was created.
+  [FAIL] Handles the empty schedule gracefully without erroring or leaving the section blank
+         The entire digest is missing; the system requested data rather than producing a gracefully-handled empty digest.
+  [FAIL] By the Numbers contains exactly 4 bullets from the game data provided
+         No By the Numbers section was generated.
+
+  No banned phrase violations.
+
+  SCORE: 33.0/100
+  SUMMARY: This response is a data request rather than a generated digest. While it appropriately identifies missing information and avoids hallucinating game details or banned phrases, it fails to deliver any of the four required digest sections (Story of the Night, Players of the Night, By the Numbers, Watch Next). A proper digest should gracefully handle missing data while still providing template content.
+
+Running tc_009: Star player DNP â€” MVP candidate absent, upset loss to bottom-tier team
+
+============================================================
+TEST CASE: tc_009 — Star player DNP â€” MVP candidate absent, upset loss to bottom-tier team
+============================================================
+
+--- GENERATED DIGEST ---
+STORY OF THE NIGHT
+
+**The Indiana Pacers, sitting at 9-31 and among the league's worst, stunned the 24-15 Boston Celtics 98-96 on the road.** Boston's absence of MVP candidate Jaylen Brown left them vulnerable against a Pacers team that had little to lose, and Indiana capitalized with balanced scoring and suffocating defense. The loss marks a rare stumble for the Celtics, who fell to a franchise in full rebuild mode.
+
+PLAYERS OF THE NIGHT
+
+🏆 Payton Pritchard — 23 PTS, 4 REB, 5 AST, 2 STL | Pritchard led Boston's scoring and managed the offense in Brown's absence, but his efforts fell short against Indiana's depth.
+
+⭐ Jay Huff — 20 PTS, 3 REB, 2 AST, 2 BLK | Underrated: Huff's plus-20 rating and 20-point night flew under the national radar despite being the Pacers' most impactful player on the floor.
+
+BY THE NUMBERS
+
+• 20 PTS: Jay Huff — season-high output keyed Indiana's upset bid from the bench.
+• 2 PTS: Boston Celtics margin of defeat — Jaylen Brown's absence proved costly against league's worst team.
+• +20: Jay Huff rating — best on-court differential of the game despite limited touches.
+• 21 PTS, 8 REB, 6 AST: Pascal Siakam — Pacers anchor delivered across the board in upset victory.
+
+WATCH NEXT
+
+Boston hosts Miami on 2026-01-14 in a critical Eastern Conference matchup to bounce back from the upset loss and reassert themselves against a playoff contender.
+--- END DIGEST ---
+
+  [PASS] references Jaylen Brown's absence or DNP as a key context for the loss
+         The digest explicitly states 'Boston's absence of MVP candidate Jaylen Brown left them vulnerable' and references 'Jaylen Brown's absence proved costly.'
+  [PASS] identifies this as an upset given the record differential (24-15 vs 9-31)
+         The digest clearly frames this as an upset with language like 'stunned' and 'upset victory' while highlighting the stark record differential.
+  [PASS] does not treat this as a routine loss without context
+         The digest emphasizes the unexpectedness of the result and provides significant context about the Pacers being 'among the league's worst' and in 'full rebuild mode.'
+  [PASS] mentions the 2-point margin as the decisive factor
+         The digest includes '2 PTS: Boston Celtics margin of defeat' in the By The Numbers section, identifying it as a critical factor.
+  [PASS] Player of the Night is not Jaylen Brown since he did not play
+         Payton Pritchard and Jay Huff are listed as Players of the Night, with no mention of Jaylen Brown as a top performer.
+  [PASS] Story of the Night frames the DNP as the story — not just the final score
+         The opening sentence immediately contextualizes the upset with Brown's absence, making it central to why this game matters rather than just reporting the score.
+
+  No banned phrase violations.
+
+  SCORE: 100.0/100
+  SUMMARY: This digest excellently captures the upset narrative by centering Jaylen Brown's absence as the key context for the Pacers' shocking victory over Boston. All evaluation criteria are met with clear framing of the upset, identification of the 2-point margin, appropriate Players of the Night selections, and strong narrative structure that makes the DNP the story rather than a mere detail.
+
+Running tc_010: Hallucination check â€” minimal input data, Claude must not invent stats
+
+============================================================
+TEST CASE: tc_010 — Hallucination check â€” minimal input data, Claude must not invent stats
+============================================================
+
+--- GENERATED DIGEST ---
+I cannot generate a Court Report digest for this game.
+
+**Reason:** No player statistics have been provided. The rules explicitly state "do not hallucinate any stats not in the data provided" and require specific stat lines for the PLAYERS OF THE NIGHT section and BY THE NUMBERS bullets.
+
+To produce an accurate digest, I need:
+- Individual player box scores (points, rebounds, assists, shooting %, etc.)
+- Team statistics
+- Any available context on key performers
+
+Please resubmit with full box score data, and I'll deliver the complete digest with all four required sections.
+--- END DIGEST ---
+
+  [PASS] does not invent specific stat lines for any player not provided in the input
+         The digest explicitly refuses to generate content and states it cannot provide player statistics without data, therefore no invented stat lines are present.
+  [PASS] does not reference specific shooting percentages or point totals not in the data
+         No shooting percentages or point totals are mentioned anywhere in the response, as the digest declines to generate content.
+  [PASS] acknowledges limited data or keeps claims general rather than specific
+         The digest explicitly acknowledges the lack of provided data and explains the specific data required, demonstrating clear awareness of limitations.
+  [PASS] does not fabricate a narrative about specific players performing well or poorly
+         No narrative about player performance is created; the response refuses to generate any performance-based content.
+  [PASS] any player names mentioned must come from the provided data only
+         No player names are mentioned in the digest, so this criterion is satisfied by absence of violations.
+  [PASS] By the Numbers bullets must not contain fabricated statistics
+         No 'By the Numbers' section was generated, therefore no fabricated statistics appear in this section.
+
+  No banned phrase violations.
+
+  SCORE: 100.0/100
+  SUMMARY: The generated response perfectly adheres to all evaluation criteria by refusing to generate content rather than risk hallucinating statistics or narratives. This is the appropriate response when required data is unavailable, demonstrating strict adherence to the no-hallucination rule and all six specified criteria.
+
+Running tc_011: Format compliance â€” correct sections, bullet length, banned phrases, story structure
+
+============================================================
+TEST CASE: tc_011 — Format compliance â€” correct sections, bullet length, banned phrases, story structure
+============================================================
+
+--- GENERATED DIGEST ---
+STORY OF THE NIGHT
+
+**Jalen Brunson carried the New York Knicks to a Finals Game 1 victory with 30 points despite shooting just 38.7%, forcing the San Antonio Spurs into an inefficient offensive night.** The Knicks' depth proved decisive, with Karl-Anthony Towns adding 18 points on efficient 46.7% shooting while Josh Hart's all-around impact—15 rebounds, 6 assists, 4 steals—neutralized Victor Wembanyama's 26-point effort. New York's bench and role players controlled the glass and forced turnovers in a 105-95 road win that set a gritty tone for the series.
+
+PLAYERS OF THE NIGHT
+
+🏆 Jalen Brunson — 30 PTS, 3 REB, 2 AST on 38.7% FG | His scoring efficiency was modest, but Brunson's 30 points and +6 net rating proved decisive in a low-scoring Finals opener where shot quality mattered more than volume.
+
+⭐ Josh Hart — 3 PTS, 15 REB, 6 AST, 4 STL | Underrated: Hart ranked outside the top scorers but his +22 net rating was the game's highest, exposing the gap between point totals and actual impact on winning plays.
+
+BY THE NUMBERS
+
+• 28.6% FG: Victor Wembanyama — worst shooting performance despite 26 points and 12 rebounds in Game 1.
+
+• +14: Karl-Anthony Towns — highest single net rating among all starters, anchoring Knicks' bench scoring and floor spacing.
+
+• 15 REB: Josh Hart — tied game high, establishing rebounding dominance that San Antonio could not match.
+
+• 95 PTS: San Antonio Spurs — season low scoring output in a Finals game, inefficient offensive execution throughout.
+
+WATCH NEXT
+
+New York Knicks @ San Antonio Spurs, NBA Finals Game 2 — the Spurs must improve their offensive execution after a 95-point showing, while the Knicks seek a 2-0 series lead away from home.
+--- END DIGEST ---
+
+  [PASS] all four section headers present and in correct order: STORY OF THE NIGHT, PLAYERS OF THE NIGHT, BY THE NUMBERS, WATCH NEXT
+         All four headers are present in the exact correct order throughout the digest.
+  [PASS] Story of the Night does not begin with the final score or a scoreline
+         The story begins with 'Jalen Brunson carried the New York Knicks to a Finals Game 1 victory' and does not lead with a scoreline.
+  [PASS] By the Numbers contains exactly 4 bullet points
+         The By the Numbers section contains exactly four bullet points as required.
+  [FAIL] each By the Numbers bullet is 20 words or fewer
+         The first bullet point contains 21 words: 'Victor Wembanyama — worst shooting performance despite 26 points and 12 rebounds in Game 1' exceeds the 20-word limit.
+  [PASS] PLAYERS OF THE NIGHT contains exactly two entries — one trophy and one star emoji
+         The section contains exactly two entries with the trophy emoji for Jalen Brunson and the star emoji for Josh Hart.
+  [PASS] no banned phrases appear anywhere in the output
+         None of the six banned phrases (wire-to-wire, dominant performance, stepped up big, simply, The final score was, In a game that ended) appear in the digest.
+
+  No banned phrase violations.
+
+  SCORE: 83.0/100
+  SUMMARY: The digest successfully meets most structural requirements with all headers present in correct order and appropriate emoji usage in the Players section. However, one bullet point in the By the Numbers section exceeds the 20-word maximum, violating a key formatting criterion. The content avoids all banned phrases and maintains strong editorial quality throughout.
+
+Running tc_012: Filler phrase and vague language check â€” one point game, star on losing team
+
+============================================================
+TEST CASE: tc_012 — Filler phrase and vague language check â€” one point game, star on losing team
+============================================================
+
+--- GENERATED DIGEST ---
+STORY OF THE NIGHT
+
+**Giannis Antetokounmpo delivered 33 points and 15 rebounds, but the Milwaukee Bucks fell 114-113 to Washington in a gut-wrenching one-point loss on New Year's Eve.** The Wizards executed a defensive blueprint that contained Milwaukee's offense despite Giannis's individual brilliance, with DiJonai Carrington orchestrating the upset from the perimeter. Washington's balance—spreading scoring across multiple weapons while limiting role-player contributions—proved decisive in a razor-thin contest.
+
+PLAYERS OF THE NIGHT
+
+🏆 Giannis Antetokounmpo — 33 PTS, 15 REB, 3 AST | His near-triple-double showcased peak dominance, yet it wasn't enough to overcome Milwaukee's collective offensive struggle.
+
+⭐ Myles Turner — 13 PTS, 7 REB, 2 STL, 5 BLK, +12 | Underrated: Turner posted the game's best plus-minus despite scoring just 13 points, signaling his defensive impact and rim protection were critical to Milwaukee's late-game execution.
+
+BY THE NUMBERS
+
+• 33 PTS, 15 REB: Giannis Antetokounmpo — season-high output wasted in a one-point defeat.
+• 5 BLK: Myles Turner — elite rim protection paired with +12 efficiency shaped defensive tone.
+• 20 PTS each: Alex Sarr and DiJonai Carrington — Washington's offensive balance prevented Milwaukee from overloading Giannis.
+• -4: Giannis Antetokounmpo — losing team efficiency despite carrying the offensive load.
+
+WATCH NEXT
+
+Milwaukee hosts its next opponent to immediately chase redemption and stability, while Washington looks to build on this statement upset victory against a reigning contender.
+--- END DIGEST ---
+
+  [PASS] refers to all players by full first and last name — no vague references like their star or the big man
+         All players are consistently referred to by full names: Giannis Antetokounmpo, DiJonai Carrington, Myles Turner, Alex Sarr, with no vague references used.
+  [PASS] does not use generic sports clichés like stepped up big, came to play, left it all on the floor
+         The digest avoids all listed clichés and uses specific, grounded language throughout without generic sports platitudes.
+  [PASS] identifies Giannis as the story — dominant performance in a losing effort
+         Giannis is clearly the centerpiece of the story, with the opening highlighting his 33 points and 15 rebounds in a one-point loss, and returning to his performance throughout.
+  [PASS] language is specific and grounded in stats — not vague narrative filler
+         The digest uses concrete statistics (33 PTS, 15 REB, 5 BLK, +12, -4) to support all claims rather than relying on vague descriptions.
+  [PASS] does not describe the game with non-specific phrases like exciting finish without supporting detail
+         The one-point loss is described with specificity (114-113) and analytical detail about Washington's defensive strategy and offensive balance, not generic excitement language.
+  [PASS] Player of the Night selection explained with specific stats not just great performance
+         Giannis's selection is supported by specific stats (33 PTS, 15 REB, 3 AST), and Turner's rating is justified with detailed reasoning about his +12 efficiency and 5 blocks despite only 13 points.
+
+  No banned phrase violations.
+
+  SCORE: 100.0/100
+  SUMMARY: This digest exemplifies strong NBA analysis by maintaining focus on Giannis's dominant yet ultimately unsuccessful performance while avoiding clichés and vague language. Every claim is anchored in specific statistics and player names, creating a grounded narrative that explains both individual brilliance and team-level shortcomings.
+
+Running tc_013: Player explosion in specific quarter â€” 26 points in Q4, comeback win
+
+============================================================
+TEST CASE: tc_013 — Player explosion in specific quarter â€” 26 points in Q4, comeback win
+============================================================
+
+--- GENERATED DIGEST ---
+STORY OF THE NIGHT
+
+**Anthony Edwards exploded for 55 points including a franchise-record 26 in the fourth quarter, yet the San Antonio Spurs still escaped with a 126-123 victory.** Victor Wembanyama's 39 points and steady play kept San Antonio afloat through Edwards' onslaught, while De'Aaron Fox orchestrated the offense with 12 assists despite finishing in the red. Minnesota's late-game heroics fell just short, as the Spurs' depth and execution in crunch time proved decisive.
+
+PLAYERS OF THE NIGHT
+
+🏆 Victor Wembanyama — 39 PTS 9 REB 3 AST 2 BLK | His composure and scoring touch neutralized Anthony Edwards' historic fourth quarter and secured the win on the road.
+
+⭐ De'Aaron Fox — 25 PTS 12 AST | Underrated: Fox ranked outside the top-3 scorers but delivered the facilitating engine that kept San Antonio's offense fluid when it mattered most.
+
+BY THE NUMBERS
+
+• 26 PTS in Q4: Anthony Edwards — most explosive single-quarter eruption, fell one possession short of a win.
+• 39 PTS: Victor Wembanyama — outscored all but Edwards while anchoring San Antonio's winning effort.
+• 12 AST: De'Aaron Fox — orchestrated offense and finished -8, highlighting the margin's tightness.
+• +8 net rating: Anthony Edwards — individual excellence unable to overcome team-level deficit management.
+
+WATCH NEXT
+
+San Antonio faces its next opponent on a short turnaround after surviving Edwards' explosion; monitor whether the Spurs' clutch execution holds against a hungry conference contender.
+--- END DIGEST ---
+
+  [PASS] references Anthony Edwards' fourth quarter specifically — not just his total points
+         The digest explicitly mentions Edwards' 'franchise-record 26 in the fourth quarter' and references his 'historic fourth quarter' multiple times.
+  [PASS] mentions the 55-point total as a standout individual performance
+         The opening line clearly states 'Anthony Edwards exploded for 55 points' as the headline performance.
+  [PASS] identifies this as a losing effort — Edwards scored 55 but Minnesota still lost
+         The digest explicitly frames Edwards' 55 points as falling short: 'fell just short' and 'fell one possession short of a win.'
+  [PASS] contrasts Edwards' explosion with Wembanyama's 39-point winning performance
+         The opening directly contrasts Edwards' 55-point explosion with Wembanyama's 39 points that 'kept San Antonio afloat' and secured the win.
+  [PASS] Player of the Night is Wembanyama or Edwards — both are defensible by game score
+         Wembanyama is named as the primary Player of the Night with his 39 points and winning performance clearly highlighted.
+  [PASS] Story of the Night captures the dual superstar narrative not just one player
+         The digest effectively presents both Edwards and Wembanyama as central figures, with Edwards' explosion contrasted against Wembanyama's clutch winning performance.
+
+  No banned phrase violations.
+
+  SCORE: 100.0/100
+  SUMMARY: This digest excellently captures the dual superstar narrative by prominently featuring both Anthony Edwards' historic 55-point performance (including 26 in the fourth quarter) and Victor Wembanyama's 39-point winning effort. The contrast between individual offensive brilliance and team success is clearly drawn, fulfilling all evaluation criteria while avoiding banned phrases.
+
+Running tc_014: Playoff series context â€” elimination game, must-win Game 6
+
+============================================================
+TEST CASE: tc_014 — Playoff series context â€” elimination game, must-win Game 6
+============================================================
+
+--- GENERATED DIGEST ---
+STORY OF THE NIGHT
+
+**Scottie Barnes orchestrated a 25-point, 14-assist masterclass in a 112-110 Toronto resurrection, forcing Game 7 and keeping the Raptors' season alive on their home floor.** Cleveland's three-game series lead evaporated in a two-point thriller that hinged on execution down the stretch. The Raptors needed perfection and found it through their engine room, while James Harden's playmaking (+11) couldn't overcome Evan Mobley's interior dominance on a night when every possession mattered.
+
+PLAYERS OF THE NIGHT
+
+🏆 Scottie Barnes — 25 PTS, 7 REB, 14 AST, 3 STL, 3 BLK | Barnes' 14 assists in an elimination game set the tone for Toronto's balanced attack and proved he could dictate pace against Cleveland's length.
+
+⭐ James Harden — 16 PTS, 9 REB, 9 AST, +11 | Underrated: Harden posted a team-high +11 despite 16 points, anchoring Cleveland's defense and setup play far more than the scoring line suggests.
+
+BY THE NUMBERS
+
+• 44% from three: Ja'Kobe Walter — Toronto's secondary scoring punch matched Cleveland's perimeter pressure and sustained momentum in the fourth quarter.
+
+• 14 REB: Evan Mobley — season-high rebounding effort on a night Cleveland needed control of the glass to close out the series.
+
+• 14 AST: Scottie Barnes — elimination-game high, forcing Cleveland to defend five shooters and creating spacing for role players.
+
+• 2 PTS: Game margin — Toronto's two-point survival keeps series alive heading into sudden-death Game 7 on the road.
+
+WATCH NEXT
+
+Game 7 will determine whether Cleveland completes its first conference finals appearance since 2024 or whether Toronto's resilience extends their postseason life one more night.
+--- END DIGEST ---
+
+  [PASS] references the series standing (CLE 3-2) or the elimination stakes explicitly
+         The digest explicitly mentions 'Cleveland's three-game series lead' and references 'elimination game' multiple times throughout.
+  [PASS] frames the win as survival — Toronto forcing Game 7 not just winning a game
+         The headline emphasizes 'Toronto resurrection, forcing Game 7 and keeping the Raptors' season alive' rather than simply stating a win.
+  [PASS] mentions Scottie Barnes' all-around performance — 25 points and 14 assists is exceptional
+         Barnes is featured prominently in both the Story of the Night and Players of the Night sections with his 25 PTS and 14 AST highlighted as exceptional.
+  [PASS] does not treat this as a regular season game — language reflects playoff elimination stakes
+         Language throughout emphasizes elimination stakes, 'sudden-death Game 7,' 'must-win pressure,' and playoff context consistently.
+  [PASS] Watch Next references Game 7 and the series context
+         The Watch Next section explicitly discusses Game 7 and frames it as determining whether Cleveland reaches the conference finals or Toronto extends their postseason life.
+  [FAIL] Story of the Night conveys the must-win pressure before revealing the result
+         The headline immediately reveals the result (112-110 Toronto win, Game 7) rather than building tension by establishing the must-win stakes first.
+
+  No banned phrase violations.
+
+  SCORE: 83.0/100
+  SUMMARY: The digest effectively captures the playoff intensity and survival narrative of Toronto's elimination-game win, with strong emphasis on Scottie Barnes' exceptional all-around play and the forced Game 7. However, it fails to structure the Story of the Night to convey must-win pressure before revealing the result, which diminishes the dramatic impact of the headline.
+
+Running tc_015: Game 7 â€” highest stakes, reigning champions vs generational star, Finals berth on line
+
+============================================================
+TEST CASE: tc_015 — Game 7 â€” highest stakes, reigning champions vs generational star, Finals berth on line
+============================================================
+
+--- GENERATED DIGEST ---
+STORY OF THE NIGHT
+
+**Victor Wembanyama and the San Antonio Spurs upset the reigning champion Oklahoma City Thunder 111-103 in Game 7 to advance to the NBA Finals.** Shai Gilgeous-Alexander's 35 points and 9 assists could not save OKC from elimination, as Julian Champagnie's 6-of-10 three-point shooting and Wembanyama's composed two-way play in his third season carried San Antonio through a winner-take-all contest. The Spurs' defensive intensity and balanced scoring proved decisive in dethroning the defending champions.
+
+PLAYERS OF THE NIGHT
+
+🏆 Victor Wembanyama — 22 PTS 7 REB 2 AST 1 STL 1 BLK on 60% FG | In his third season, Wembanyama delivered efficiently when it mattered most, staying out of foul trouble with 5 fouls while posting a +7 rating in a Game 7 Finals clincher.
+
+⭐ Julian Champagnie — 20 PTS 6 REB 1 AST on 60% from three | Underrated: Champagnie's 6-of-10 three-point night was the series-altering shot-making that overshadowed Wembanyama's name in the box score but proved equally critical to the upset.
+
+BY THE NUMBERS
+
+• 35 PTS: Shai Gilgeous-Alexander — insufficient in losing effort despite career-caliber Game 7 output.
+• 60% FG: Victor Wembanyama — efficient two-way contribution as third-year player in Finals-clinching game.
+• 60% 3P: Julian Champagnie — 6-of-10 from deep, decisive perimeter advantage over OKC's supporting cast.
+• -7 rating: Shai Gilgeous-Alexander — reigning champions' best player outscored despite 35 points, summing the defensive gap.
+
+WATCH NEXT
+
+San Antonio's Finals opponent will be determined by the Eastern Conference Finals result; the Spurs' trip to the championship series marks Wembanyama's first Finals appearance in just his third NBA season.
+--- END DIGEST ---
+
+  [PASS] references Game 7 or winner-take-all stakes explicitly
+         The digest explicitly mentions 'Game 7' and 'winner-take-all contest' multiple times throughout the story.
+  [PASS] mentions Wembanyama advancing to his first NBA Finals as the narrative centerpiece
+         Wembanyama is prominently featured as the centerpiece with explicit mention of 'his third season' and 'Wembanyama's first Finals appearance in just his third NBA season.'
+  [PASS] identifies SGA's 35-point losing effort as a significant story angle
+         The digest dedicates a 'BY THE NUMBERS' section highlighting SGA's 35 points with the notation 'insufficient in losing effort despite career-caliber Game 7 output.'
+  [PASS] references OKC as reigning champions being eliminated
+         The opening clearly states 'upset the reigning champion Oklahoma City Thunder' and describes 'dethroning the defending champions.'
+  [PASS] does not treat this as a routine playoff win – language must reflect the magnitude
+         Language emphasizes 'upset,' 'eliminating,' 'Finals clincher,' and 'magnitude' through phrases like 'winner-take-all' and 'dethroning,' avoiding routine framing.
+  [PASS] Champagnie's 60% 3P shooting on 10 attempts is mentioned as a key supporting performance
+         The digest explicitly mentions 'Julian Champagnie's 6-of-10 three-point shooting' and '60% from three' with dedicated player section highlighting his critical contribution.
+
+  No banned phrase violations.
+
+  SCORE: 100.0/100
+  SUMMARY: This digest excellently executes all evaluation criteria with dramatic language befitting a Game 7 Finals-clinching upset. Wembanyama's historic third-season Finals advancement serves as the narrative centerpiece while appropriately contextualizing SGA's historic but futile 35-point effort and Champagnie's crucial three-point shooting in eliminating the reigning champion Thunder.
+
+Running tc_016: Historic performance â€” second highest single game scoring total in NBA history
+
+============================================================
+TEST CASE: tc_016 — Historic performance â€” second highest single game scoring total in NBA history
+============================================================
+
+--- GENERATED DIGEST ---
+STORY OF THE NIGHT
+
+**Bam Adebayo erupted for 83 points, the second-highest single-game scoring total in NBA history, lifting Miami past Washington 150–129.** Adebayo's historic night surpassed Kobe Bryant's legendary 81-point performance from 2006 and fell just 17 points short of Wilt Chamberlain's all-time record of 100. The Heat's dominant offensive display left Washington unable to keep pace despite 22-point efforts from Alex Sarr and Will Riley.
+
+PLAYERS OF THE NIGHT
+
+🏆 Bam Adebayo — 83 PTS, 9 REB, 3 AST, 2 STL, 2 BLK | His 83-point night ranks second all-time and single-handedly carried Miami to a decisive 21-point victory.
+
+⭐ Alex Sarr — 22 PTS, 6 REB, 2 BLK | Underrated: Sarr's scoring tied for Washington's team high and his 2 blocks showed defensive presence despite a minus-9 rating on a losing effort.
+
+BY THE NUMBERS
+
+• 83 PTS: Bam Adebayo — second-highest single-game total in NBA history, trailing only Chamberlain's 100-point game.
+
+• 150 PTS: Miami Heat — explosive offensive output powered primarily through Adebayo's historic scoring barrage.
+
+• +20: Bam Adebayo — team-best plus-minus despite 5 turnovers, demonstrating his net positive impact on Miami.
+
+• 21 PTS: Margin of victory — Heat's dominant performance leaves Washington searching for answers after competitive regular season play.
+
+WATCH NEXT
+
+With Bam Adebayo in historic form, Miami's next matchup will reveal whether this elite performance can sustain into playoff positioning—monitor upcoming games data for Heat's next opponent.
+--- END DIGEST ---
+
+  [PASS] treats Bam's 83 points as the defining story – not just another good scoring night
+         The digest leads with Bam's 83-point eruption as the primary story and emphasizes its historic nature throughout.
+  [PASS] references the historical significance – second highest scoring game in NBA history
+         The digest explicitly states multiple times that 83 points is the second-highest single-game total in NBA history.
+  [PASS] does not hallucinate that this is an all-time record – Wilt's 100 still stands
+         The digest correctly acknowledges Wilt Chamberlain's 100-point record as the all-time high, noting Adebayo fell 17 points short.
+  [PASS] Player of the Night is unambiguously Bam Adebayo
+         Bam Adebayo is clearly identified as the first and primary Player of the Night with a trophy emoji.
+  [PASS] By the Numbers leads with Bam's 83 points as the first bullet
+         The first bullet point in the By the Numbers section features Bam's 83-point performance.
+  [PASS] Story of the Night opens with the historic nature of the performance
+         The opening sentence immediately establishes the historic significance by highlighting that 83 points is the second-highest single-game scoring total.
+
+  VIOLATIONS FOUND:
+    - "dominant performance"
+
+  SCORE: 90.0/100
+  SUMMARY: The digest excellently captures Bam Adebayo's historic 83-point performance as the defining story while accurately maintaining that Wilt's 100-point record remains the all-time standard. One violation was found with the phrase 'dominant performance' used in the Story of the Night section.
+
+
+======================================================================
+  EVAL SUMMARY
+======================================================================
+  ID           Score  Scenario
+  --------  -------  ---------------------------------------------
+  tc_001        83.0  Close game â€” one point margin, playoff series context
+  tc_002       100.0  Blowout â€” 52-point margin, late season seeding implications
+  tc_003        83.0  Double overtime â€” WCF Game 1, generational superstar performance

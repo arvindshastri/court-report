@@ -25,7 +25,8 @@ def get_games(game_date=None):
     if game_date:
         scoreboard = ScoreboardV3(game_date=game_date, league_id="00")
         games = scoreboard.get_dict()["scoreboard"]["games"]
-        return parse_games(games), game_date
+        final_games = [g for g in games if g["gameStatusText"].strip().lower() == "final"]
+        return parse_games(final_games), game_date
 
     for days_back in range(1, 15):
         check_date = date.today() - timedelta(days=days_back)
