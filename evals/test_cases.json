@@ -1,0 +1,469 @@
+[
+  {
+    "id": "tc_001",
+    "scenario": "Close game — one point margin, playoff series context",
+    "game_date": "2026-06-05",
+    "game": "New York Knicks @ San Antonio Spurs — NBA Finals Game 2",
+    "final": "NYK 105 — SAS 104",
+    "series_context": "NYK leads series 2-0",
+    "key_performers": [
+      "Victor Wembanyama: 29 PTS 9 REB 4 BLK 52.4% FG (losing team)",
+      "Karl-Anthony Towns: 13 REB 66.7% FG +11",
+      "Jalen Brunson: 28.0% FG 5 STL",
+      "Dylan Harper: 15 PTS +12",
+      "Devin Vassell: 14 PTS 9 REB 5 AST"
+    ],
+    "quarter_scores": "NYK: 24-28-26-27 | SAS: 27-26-28-23",
+    "eval_criteria": [
+      "references the one-point margin or describes it as a close or tight game",
+      "mentions the series standing (NYK leads 2-0)",
+      "identifies a standout performer from the losing team by name",
+      "does not start the story with the final score",
+      "By the Numbers bullets are all under 20 words each",
+      "does not use banned phrases like wire-to-wire or dominant performance"
+    ],
+    "must_not_contain": [
+      "wire-to-wire",
+      "dominant performance",
+      "stepped up big",
+      "simply"
+    ],
+    "use_live_data": true
+  },
+  {
+    "id": "tc_002",
+    "scenario": "Blowout — 52-point margin, late season seeding implications",
+    "game_date": "2026-03-29",
+    "game": "Orlando Magic @ Toronto Raptors — Regular Season",
+    "final": "TOR 139 — ORL 87",
+    "margin": 52,
+    "key_performers": [
+      "Scottie Barnes: 23 PTS 5 REB 15 AST 3 STL +30 (career-high assists, 4th straight game with 10+ AST)",
+      "RJ Barrett: 24 PTS 3 REB 3 AST 3 STL +34",
+      "Sandro Mamukelashvili: 19 PTS 4 REB 3 STL +47"
+    ],
+    "context": "Toronto needed the win for top-6 seeding. Game was effectively over by halftime — quarter scores showed a dominant first half by Toronto.",
+    "eval_criteria": [
+      "references the dominant margin or describes the game as a blowout",
+      "mentions Scottie Barnes by full name with his assist total or the career-high context",
+      "references quarter scores or describes the game as decided by halftime",
+      "does not describe the game as competitive or close",
+      "identifies at least one stat beyond points — assists, steals, or plus-minus",
+      "By the Numbers includes at least one team-level stat not just individual performers"
+    ],
+    "must_not_contain": [
+      "wire-to-wire",
+      "competitive game",
+      "came down to the wire",
+      "back and forth"
+    ],
+    "use_live_data": true
+  },
+  {
+    "id": "tc_003",
+    "scenario": "Double overtime — WCF Game 1, generational superstar performance",
+    "game_date": "2026-05-18",
+    "game": "Oklahoma City Thunder @ San Antonio Spurs — WCF Game 1",
+    "final": "SAS 122 — OKC 115 (2OT)",
+    "key_performers": [
+      "Victor Wembanyama: 41 PTS 24 REB 3 AST 3 BLK +16",
+      "Dylan Harper: 24 PTS 11 REB 6 AST 7 STL +14",
+      "Shai Gilgeous-Alexander: 24 PTS 3 REB 12 AST 5 STL -15 (losing team)"
+    ],
+    "context": "Game 1 of the 2026 WCF. OKC entered as reigning champions. Game went to double overtime before Spurs secured the win.",
+    "eval_criteria": [
+      "explicitly mentions double overtime — not just overtime or OT",
+      "references Wembanyama's points and rebounds as a standout performance",
+      "identifies OKC as reigning champions or references the series stakes",
+      "does not describe the game as decided early or comfortable",
+      "By the Numbers references the overtime quarter scores or point differential in OT or 2OT periods",
+      "Story of the Night conveys urgency or high stakes — language reflects a playoff 2OT game"
+    ],
+    "must_not_contain": [
+      "wire-to-wire",
+      "never in doubt",
+      "comfortable win",
+      "dominant from the start"
+    ],
+    "use_live_data": true
+  },
+  {
+    "id": "tc_004",
+    "scenario": "Player bad night — superstar meltdown, blowout loss",
+    "game_date": "2026-04-02",
+    "game": "Los Angeles Lakers @ Oklahoma City Thunder — Regular Season",
+    "final": "OKC 139 — LAL 96",
+    "margin": 43,
+    "key_performers": [
+      "Luka Doncic: 12 PTS 4 REB 7 AST 1 STL 6 TO 30% FG 13% 3P -25 (well below season averages)",
+      "LeBron James: 13 PTS 6 REB 2 AST 1 STL 1 BLK -37",
+      "Shai Gilgeous-Alexander: 28 PTS 7 REB 7 AST +35"
+    ],
+    "context": "Lakers two stars both had poor nights. Luka's 6 turnovers and 30% shooting were major factors in the blowout loss.",
+    "eval_criteria": [
+      "references Luka Doncic's shooting percentage or turnover total as the story — not just the final score",
+      "does not describe Luka's performance as average or acceptable",
+      "contrasts the losing stars' performance with SGA's dominant night",
+      "references the margin of defeat or describes the game as a blowout",
+      "does not start the Story of the Night with the final score",
+      "Player of the Night is not Luka or LeBron given their negative plus-minus and poor efficiency"
+    ],
+    "must_not_contain": [
+      "Luka had a solid night",
+      "competitive effort",
+      "back and forth",
+      "wire-to-wire"
+    ],
+    "use_live_data": true
+  },
+  {
+    "id": "tc_005",
+    "scenario": "Comeback story — 22-point halftime deficit overcome, massive upset, overtime win",
+    "game_date": "2025-12-18",
+    "game": "Houston Rockets vs New Orleans Pelicans — Regular Season",
+    "final": "NOP 133 — HOU 128 (OT)",
+    "key_performers": [
+      "Kevin Durant: 32 PTS 7 REB 2 AST 4 BLK 6 TO -7 (losing team, game score leader)",
+      "Saddiq Bey: 29 PTS 9 REB 2 STL +21",
+      "Herb Jones: 18 PTS 3 REB 3 AST 8 STL 6 PF +18",
+      "Alperen Sengun: 28 PTS 11 REB 8 AST 5 PF -5 (losing team)",
+      "Brandon Murphy III: 27 PTS 3 REB +0"
+    ],
+    "context": "NOP entered with a 6-22 record, worst in the league. Houston was 16-8 with KD in his first season after being traded from the Suns. NOP trailed by 22 at halftime, forced overtime, and won by 5. One of the biggest upsets of the early season.",
+    "eval_criteria": [
+      "references the comeback or the halftime deficit — not just the final score",
+      "identifies this as an upset given the record differential (6-22 vs 16-8)",
+      "mentions overtime as part of the comeback story",
+      "Player of the Night is from the losing team (Houston) — verifies game score logic over eye test",
+      "does not describe NOP as the expected winner or Houston as the underdog",
+      "Story of the Night captures the upset angle — language reflects the improbability of the result"
+    ],
+    "must_not_contain": [
+      "wire-to-wire",
+      "never in doubt",
+      "comfortable win",
+      "dominant from the start",
+      "as expected"
+    ],
+    "use_live_data": true
+  },
+  {
+    "id": "tc_006",
+    "scenario": "Single game night — Story of the Night serves as full recap, no game cards",
+    "game_date": "2026-06-03",
+    "game": "New York Knicks @ San Antonio Spurs — NBA Finals Game 1",
+    "final": "NYK 105 — SAS 95",
+    "key_performers": [
+      "Jalen Brunson: 30 PTS 3 REB 2 AST 38.7% FG +6",
+      "Josh Hart: 3 PTS 15 REB 6 AST 4 STL +22",
+      "Victor Wembanyama: 26 PTS 12 REB 3 BLK 28.6% FG -5"
+    ],
+    "context": "Only one game played this night. NBA Finals Game 1. Story of the Night should serve as the complete recap — no separate game card section.",
+    "eval_criteria": [
+      "Story of the Night is substantive — at least 3 sentences covering the full game narrative",
+      "does not generate a separate game card recap section",
+      "identifies Josh Hart as the underrated performer given 3 points but +22 rating and 15 rebounds",
+      "does not start the story with the final score",
+      "identifies a specific story angle beyond just the final score — momentum shift, standout performer, or notable inefficiency",
+      "By the Numbers contains exactly 4 bullets"
+    ],
+    "must_not_contain": [
+      "wire-to-wire",
+      "dominant performance",
+      "GAME RECAP",
+      "game card"
+    ],
+    "use_live_data": true
+  },
+  {
+    "id": "tc_007",
+    "scenario": "Multiple games night — 15 games, final night of regular season, playoff seeding implications",
+    "game_date": "2026-04-12",
+    "notable_games": [
+      "Miami Heat 143 — Atlanta Hawks 117 (MIA blowout, ATL needed win for top-6 seed)",
+      "Toronto Raptors 136 — Brooklyn Nets 101 (TOR blowout, protected No. 6 seed)",
+      "Charlotte Hornets 110 — New York Knicks 96 (CHA clinched No. 9, Play-In positioning)",
+      "Orlando Magic vs Boston Celtics (BOS unable to clinch No. 6 seed)"
+    ],
+    "notable_performers": [
+      "Baylor Scheierman (BOS): 30 PTS 7 REB 7 AST 2 STL +15",
+      "Bam Adebayo (MIA): 25 PTS 10 REB 3 AST 3 STL 2 BLK +16",
+      "Scottie Barnes (TOR): 18 PTS 12 REB 12 AST 1 STL 3 BLK +35 (triple-double)",
+      "LaMelo Ball (CHA): 19 PTS 7 REB 6 AST 2 STL +2"
+    ],
+    "context": "Final night of the 2025-26 regular season. 15 games played. Eastern Conference seeding mostly decided the night — multiple teams fighting for top-6 vs Play-In positioning.",
+    "eval_criteria": [
+      "Story of the Night covers the broader narrative of the night — seeding implications — not just one game",
+      "does not recap all 15 games individually — synthesizes the night into key storylines",
+      "mentions at least one seeding or playoff implication by name",
+      "Player of the Night is selected from across all 15 games — not just the first game processed",
+      "By the Numbers pulls stats from at least two different games — not all from one game",
+      "mentions at least one triple-double or exceptional plus-minus performance from the night"
+    ],
+    "must_not_contain": [
+      "wire-to-wire",
+      "all 15 games",
+      "every game tonight",
+      "dominant performance"
+    ],
+    "use_live_data": true
+  },
+  {
+    "id": "tc_008",
+    "scenario": "No upcoming games — day after Finals end, empty schedule",
+    "game_date": "2026-06-19",
+    "game": "NBA Finals Game 7 (hypothetical)",
+    "final": "TBD — hypothetical Game 7",
+    "context": "Final game of the 2025-26 NBA season. No games scheduled after this date until Summer League. Watch Next section should handle empty schedule gracefully.",
+    "eval_criteria": [
+      "Watch Next section does not hallucinate a scheduled game",
+      "Watch Next either says no games scheduled or references Summer League or next season",
+      "Story of the Night conveys the Finals are over — championship context",
+      "does not generate a Watch Next with a specific tip-off time when no game exists",
+      "handles the empty schedule gracefully without erroring or leaving the section blank",
+      "By the Numbers contains exactly 4 bullets from the game data provided"
+    ],
+    "must_not_contain": [
+      "tonight at",
+      "tip-off at",
+      "game tips off"
+    ],
+    "use_live_data": false
+  },
+  {
+    "id": "tc_009",
+    "scenario": "Star player DNP — MVP candidate absent, upset loss to bottom-tier team",
+    "game_date": "2026-01-12",
+    "game": "Indiana Pacers vs Boston Celtics — Regular Season",
+    "final": "IND 98 — BOS 96",
+    "records": "BOS 24-15, IND 9-31",
+    "key_performers": [
+      "Payton Pritchard (BOS): 23 PTS 4 REB 5 AST 2 STL +1",
+      "Pascal Siakam (IND): 21 PTS 8 REB 6 AST 2 STL +11",
+      "Jay Huff (IND): 20 PTS 3 REB 2 AST 2 BLK +20"
+    ],
+    "dnp": "Jaylen Brown (BOS) — DNP, MVP candidate, All-Star calibre player",
+    "context": "Celtics were 24-15, Pacers were 9-31 near the bottom of the East. Brown sat out despite playing the game before. Celtics lost by 2 points to one of the worst teams in the league.",
+    "eval_criteria": [
+      "references Jaylen Brown's absence or DNP as a key context for the loss",
+      "identifies this as an upset given the record differential (24-15 vs 9-31)",
+      "does not treat this as a routine loss without context",
+      "mentions the 2-point margin as the decisive factor",
+      "Player of the Night is not Jaylen Brown since he did not play",
+      "Story of the Night frames the DNP as the story — not just the final score"
+    ],
+    "must_not_contain": [
+      "Jaylen Brown struggled",
+      "Jaylen Brown had a quiet night",
+      "wire-to-wire",
+      "dominant performance"
+    ],
+    "use_live_data": true
+  },
+  {
+    "id": "tc_010",
+    "scenario": "Hallucination check — minimal input data, Claude must not invent stats",
+    "game_date": "2025-12-31",
+    "game": "Phoenix Suns vs Cleveland Cavaliers — Regular Season",
+    "final": "CLE 129 — PHX 113",
+    "key_performers": [],
+    "context": "Minimal data provided intentionally. No player stats supplied. Testing whether Claude stays grounded in provided data or hallucinates specific stats and performers.",
+    "eval_criteria": [
+      "does not invent specific stat lines for any player not provided in the input",
+      "does not reference specific shooting percentages or point totals not in the data",
+      "acknowledges limited data or keeps claims general rather than specific",
+      "does not fabricate a narrative about specific players performing well or poorly",
+      "any player names mentioned must come from the provided data only",
+      "By the Numbers bullets must not contain fabricated statistics"
+    ],
+    "must_not_contain": [
+      "scored X points",
+      "shot X% from the field",
+      "finished with"
+    ],
+    "use_live_data": false
+  },
+  {
+    "id": "tc_011",
+    "scenario": "Format compliance — correct sections, bullet length, banned phrases, story structure",
+    "game_date": "2026-06-03",
+    "game": "New York Knicks @ San Antonio Spurs — NBA Finals Game 1",
+    "final": "NYK 105 — SAS 95",
+    "key_performers": [
+      "Jalen Brunson: 30 PTS 3 REB 2 AST 38.7% FG +6",
+      "Josh Hart: 3 PTS 15 REB 6 AST 4 STL +22",
+      "Victor Wembanyama: 26 PTS 12 REB 3 BLK 28.6% FG -5",
+      "Karl-Anthony Towns: 18 PTS 12 REB 4 AST 46.7% FG +14"
+    ],
+    "context": "Format compliance test — checking structural rules are followed regardless of content.",
+    "eval_criteria": [
+      "all four section headers present and in correct order: STORY OF THE NIGHT, PLAYERS OF THE NIGHT, BY THE NUMBERS, WATCH NEXT",
+      "Story of the Night does not begin with the final score or a scoreline",
+      "By the Numbers contains exactly 4 bullet points",
+      "each By the Numbers bullet is 20 words or fewer",
+      "PLAYERS OF THE NIGHT contains exactly two entries — one trophy and one star emoji",
+      "no banned phrases appear anywhere in the output"
+    ],
+    "must_not_contain": [
+      "wire-to-wire",
+      "dominant performance",
+      "stepped up big",
+      "simply",
+      "The final score was",
+      "In a game that ended"
+    ],
+    "use_live_data": true
+  },
+  {
+    "id": "tc_012",
+    "scenario": "Filler phrase and vague language check — one point game, star on losing team",
+    "game_date": "2025-12-31",
+    "game": "Milwaukee Bucks vs Washington Wizards — Regular Season",
+    "final": "WAS 114 — MIL 113",
+    "key_performers": [
+      "Giannis Antetokounmpo (MIL): 33 PTS 15 REB 3 AST -4 (losing team)",
+      "Alex Sarr (WAS): 20 PTS 11 REB 2 AST 4 BLK -5",
+      "DiJonai Carrington (WAS): 20 PTS 5 REB 5 AST +6",
+      "Myles Turner (MIL): 13 PTS 7 REB 2 AST 2 STL 5 BLK +12"
+    ],
+    "context": "One point game. Giannis had a monster performance but lost. Washington pulled off an upset win.",
+    "eval_criteria": [
+      "refers to all players by full first and last name — no vague references like their star or the big man",
+      "does not use generic sports clichés like stepped up big, came to play, left it all on the floor",
+      "identifies Giannis as the story — dominant performance in a losing effort",
+      "language is specific and grounded in stats — not vague narrative filler",
+      "does not describe the game with non-specific phrases like exciting finish without supporting detail",
+      "Player of the Night selection explained with specific stats not just great performance"
+    ],
+    "must_not_contain": [
+      "stepped up big",
+      "came to play",
+      "left it all on the floor",
+      "their star",
+      "the big man",
+      "put the team on his back",
+      "simply",
+      "wire-to-wire"
+    ],
+    "use_live_data": true
+  },
+  {
+    "id": "tc_013",
+    "scenario": "Player explosion in specific quarter — 26 points in Q4, comeback win",
+    "game_date": "2026-01-17",
+    "game": "Minnesota Timberwolves vs San Antonio Spurs — Regular Season",
+    "final": "SAS 126 — MIN 123",
+    "key_performers": [
+      "Anthony Edwards (MIN): 55 PTS 4 REB 3 AST 4 PF +8 (26 points in Q4 alone)",
+      "Jaden McDaniels (MIN): 23 PTS 5 REB 5 AST 1 STL -6",
+      "Victor Wembanyama (SAS): 39 PTS 9 REB 3 AST 2 BLK +5 (winning team)",
+      "De'Aaron Fox (SAS): 25 PTS 3 REB 12 AST -8"
+    ],
+    "context": "Anthony Edwards scored 55 points including 26 in the fourth quarter alone. Despite the explosion Spurs held on to win by 3.",
+    "eval_criteria": [
+      "references Anthony Edwards' fourth quarter specifically — not just his total points",
+      "mentions the 55-point total as a standout individual performance",
+      "identifies this as a losing effort — Edwards scored 55 but Minnesota still lost",
+      "contrasts Edwards' explosion with Wembanyama's 39-point winning performance",
+      "Player of the Night is Wembanyama or Edwards — both are defensible by game score",
+      "Story of the Night captures the dual superstar narrative not just one player"
+    ],
+    "must_not_contain": [
+      "wire-to-wire",
+      "dominant from the start",
+      "never in doubt",
+      "comfortable win"
+    ],
+    "use_live_data": true
+  },
+  {
+    "id": "tc_014",
+    "scenario": "Playoff series context — elimination game, must-win Game 6",
+    "game_date": "2026-05-01",
+    "game": "Cleveland Cavaliers @ Toronto Raptors — ECF Round 1 Game 6",
+    "final": "TOR 112 — CLE 110",
+    "series_context": "CLE led series 3-2. Toronto's season on the line — win forces Game 7, loss means elimination.",
+    "key_performers": [
+      "Scottie Barnes (TOR): 25 PTS 7 REB 14 AST 3 STL 3 BLK +2",
+      "Ja'Kobe Walter (TOR): 24 PTS 5 REB 3 AST 44% 3P 4 PF -6",
+      "Evan Mobley (CLE): 26 PTS 14 REB 3 AST 1 STL -3",
+      "James Harden (CLE): 16 PTS 9 REB 9 AST 2 STL 4 TO +11"
+    ],
+    "context": "Toronto forced to win or go home. Cleveland one win away from advancing. Toronto won by 2 to force Game 7.",
+    "eval_criteria": [
+      "references the series standing (CLE 3-2) or the elimination stakes explicitly",
+      "frames the win as survival — Toronto forcing Game 7 not just winning a game",
+      "mentions Scottie Barnes' all-around performance — 25 points and 14 assists is exceptional",
+      "does not treat this as a regular season game — language reflects playoff elimination stakes",
+      "Watch Next references Game 7 and the series context",
+      "Story of the Night conveys the must-win pressure before revealing the result"
+    ],
+    "must_not_contain": [
+      "wire-to-wire",
+      "comfortable win",
+      "never in doubt",
+      "dominant performance"
+    ],
+    "use_live_data": true
+  },
+  {
+    "id": "tc_015",
+    "scenario": "Game 7 — highest stakes, reigning champions vs generational star, Finals berth on line",
+    "game_date": "2026-05-30",
+    "game": "Oklahoma City Thunder vs San Antonio Spurs — WCF Game 7",
+    "final": "SAS 111 — OKC 103",
+    "series_context": "Winner advances to NBA Finals. OKC defending champions. Wembanyama's first playoff run, potential first Finals appearance.",
+    "key_performers": [
+      "Victor Wembanyama (SAS): 22 PTS 7 REB 2 AST 1 STL 1 BLK 60% FG 5 PF +7",
+      "Julian Champagnie (SAS): 20 PTS 6 REB 1 AST 1 STL 60% 3P on 10 attempts +16",
+      "Shai Gilgeous-Alexander (OKC): 35 PTS 4 REB 9 AST 3 STL -7 (losing team)",
+      "Cason Wallace (OKC): 17 PTS 7 REB 4 AST 2 STL -3"
+    ],
+    "context": "Winner-take-all Game 7. OKC entered as reigning champions and favorites. Wembanyama advances to his first NBA Finals in just his third season. SGA had 35 points in a losing effort — reigning champions eliminated.",
+    "eval_criteria": [
+      "references Game 7 or winner-take-all stakes explicitly",
+      "mentions Wembanyama advancing to his first NBA Finals as the narrative centerpiece",
+      "identifies SGA's 35-point losing effort as a significant story angle",
+      "references OKC as reigning champions being eliminated",
+      "does not treat this as a routine playoff win — language must reflect the magnitude",
+      "Champagnie's 60% 3P shooting on 10 attempts is mentioned as a key supporting performance"
+    ],
+    "must_not_contain": [
+      "wire-to-wire",
+      "comfortable win",
+      "never in doubt",
+      "dominant from the start",
+      "routine victory"
+    ],
+    "use_live_data": true
+  },
+  {
+    "id": "tc_016",
+    "scenario": "Historic performance — second highest single game scoring total in NBA history",
+    "game_date": "2026-03-10",
+    "game": "Washington Wizards vs Miami Heat — Regular Season",
+    "final": "MIA 150 — WAS 129",
+    "key_performers": [
+      "Bam Adebayo (MIA): 83 PTS 9 REB 3 AST 2 STL 2 BLK 5 TO +20 (second highest single game scoring total in NBA history behind Wilt Chamberlain's 100)",
+      "Alex Sarr (WAS): 22 PTS 6 REB 1 AST 2 BLK -9",
+      "Will Riley (WAS): 22 PTS 4 REB 2 AST 1 STL -10"
+    ],
+    "context": "Bam Adebayo scored 83 points — the second highest single game total in NBA history, surpassing Kobe Bryant's 81-point game from 2006.",
+    "eval_criteria": [
+      "treats Bam's 83 points as the defining story — not just another good scoring night",
+      "references the historical significance — second highest scoring game in NBA history",
+      "does not hallucinate that this is an all-time record — Wilt's 100 still stands",
+      "Player of the Night is unambiguously Bam Adebayo",
+      "By the Numbers leads with Bam's 83 points as the first bullet",
+      "Story of the Night opens with the historic nature of the performance"
+    ],
+    "must_not_contain": [
+      "all-time NBA record",
+      "broke Wilt's record",
+      "never been done before",
+      "wire-to-wire",
+      "dominant performance"
+    ],
+    "use_live_data": true
+  }
+]

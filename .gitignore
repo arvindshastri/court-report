@@ -7,3 +7,4 @@ node_modules/
 data/chroma_db/
 data/digest_cache.json
 HANDOFF.md
+ROADMAP.md
