@@ -208,7 +208,7 @@ def _retrieve_chroma_context(query: str, last_user_msg: str | None = None) -> st
     player_name = _extract_player_name(combined_text)
 
     season_query = (
-        f"{player_name} season averages 2024-25" if player_name else query
+        f"{player_name} season averages 2025-26" if player_name else query
     )
 
     seen = set()

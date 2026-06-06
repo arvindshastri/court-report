@@ -13,7 +13,7 @@ from pipeline.chroma_store import store_season_averages, delete_season_averages
 
 def fetch_season_averages(top_n=50):
     """
-    Fetch per-game season averages for all NBA players in 2024-25,
+    Fetch per-game season averages for all NBA players in 2025-26,
     sort by points descending, and return the top N as a list of dicts.
     """
     print("Fetching 2025-26 season averages from NBA API...")
@@ -62,8 +62,8 @@ def fetch_season_averages(top_n=50):
 
 
 if __name__ == "__main__":
-    print("Deleting old 2024-25 season averages from Chroma...")
-    delete_season_averages("2024-25")
+    print("Deleting old 2025-26 season averages from Chroma...")
+    delete_season_averages("2025-26")
 
     players = fetch_season_averages(top_n=50)
 

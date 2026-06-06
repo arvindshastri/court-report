@@ -146,7 +146,7 @@ def store_player_game_stats(games, game_date):
 def delete_season_averages(season):
     """
     Delete all documents from Chroma where metadata type='season_averages'
-    and season matches the given season string (e.g. '2024-25').
+    and season matches the given season string (e.g. '2025-26').
     Prints document count before and after.
     """
     vs = get_vectorstore()

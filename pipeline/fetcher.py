@@ -208,7 +208,7 @@ def get_upcoming_games():
     return upcoming
 
 
-def get_series_games(home_team_id, away_team_id, season="2024-25"):
+def get_series_games(home_team_id, away_team_id, season="2025-26"):
     """
     Pull all playoff games between two specific teams in a given season
     using LeagueGameFinder. Returns a list of game dicts with date, score,
@@ -238,7 +238,7 @@ def get_series_games(home_team_id, away_team_id, season="2024-25"):
     return games
 
 
-def get_player_season_averages(player_id, season="2024-25"):
+def get_player_season_averages(player_id, season="2025-26"):
     """
     Pull season averages for a player using PlayerCareerStats.
     Returns a dict with key per-game averages for the requested season.

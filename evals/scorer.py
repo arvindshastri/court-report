@@ -8,12 +8,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from pipeline.claude_recap import client, DIGEST_SYSTEM_PROMPT
-from pipeline.fetcher import get_games, get_player_stats, get_upcoming_games
+from pipeline.fetcher import get_games, get_upcoming_games
 from pipeline.claude_recap import generate_digest, generate_game_card_recap
-from pipeline.chroma_store import retrieve_relevant_history, get_vectorstore
+from pipeline.chroma_store import get_vectorstore
 from pipeline.pipeline import (
     build_full_game,
-    calculate_game_score,
     get_underrated_player,
     attach_historical_context,
 )
