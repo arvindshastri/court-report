@@ -13,7 +13,7 @@ if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from pipeline.fetcher import get_games, get_player_stats, get_upcoming_games
+from pipeline.fetcher import get_games, get_player_stats, get_upcoming_games, get_play_by_play
 from pipeline.claude_recap import generate_digest, generate_game_card_recap
 from pipeline.chroma_store import (
     retrieve_relevant_history,
@@ -75,7 +75,19 @@ def build_full_game(game):
         for player in player_stats[side]:
             player["game_score"] = calculate_game_score(player)
 
-    return {**game, "player_stats": player_stats}
+    # --- Clutch moments: pull play-by-play for close, completed games ---
+    home_score = game["home_team"]["score"]
+    away_score = game["away_team"]["score"]
+    margin = abs(home_score - away_score)
+
+    clutch_moments = []
+    if margin <= 5 and game.get("status", "").strip().lower() == "final":
+        home = f"{game['home_team']['city']} {game['home_team']['name']}"
+        away = f"{game['away_team']['city']} {game['away_team']['name']}"
+        print(f"  [clutch] Fetching play-by-play for close game: {away} @ {home} (margin: {margin})")
+        clutch_moments = get_play_by_play(game["game_id"])
+
+    return {**game, "player_stats": player_stats, "clutch_moments": clutch_moments}
 
 
 def get_underrated_player(games):

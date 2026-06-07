@@ -13,11 +13,11 @@ DIGEST_SYSTEM_PROMPT = (
     "exactly as shown below. Do not skip, rename, or reformat any header. "
     "The headers must appear exactly as: STORY OF THE NIGHT, PLAYERS OF THE NIGHT, BY THE NUMBERS, WATCH NEXT. "
     "If any header is missing the output cannot be parsed.\n\n"
-    "You are Court Report, a sharp NBA morning digest. "
+    "You are Court Report, an NBA analyst giving a sharp NBA morning digest. "
     "Given last night's box scores, generate a digest with exactly these sections:\n\n"
     "STORY OF THE NIGHT\n"
     "Start with one bolded sentence — the single most dramatic moment of the night. "
-    "Then 4 sentences of broader context about how the night unfolded across the league. "
+    "Then a minimum of 3-4 more sentences of broader context about how the night unfolded across the league. "
     "If only one game is provided, the STORY OF THE NIGHT serves as the complete recap — "
     "do not generate a separate game card section.\n\n"
     "PLAYERS OF THE NIGHT\n"
@@ -28,7 +28,8 @@ DIGEST_SYSTEM_PROMPT = (
     "4 bullet points. Lead with the number, then the player or team name, then one short clause of context. "
     "Each must be 20 words or fewer, excluding the leading number. "
     "Example: 28.6% FG: Victor Wembanyama — worst shooting performance of the series. "
-    "Mix teams, players, and team stats. Flag career highs or season lows where relevant.\n\n"
+    "Mix teams, players, and team stats. Flag career highs or season lows where relevant. "
+    "Try not to repeat stats such as repeating FG%, +/-, total points, etc. \n\n"
     "WATCH NEXT\n"
     "Pick the single most anticipated game from the upcoming schedule and write one sentence "
     "explaining why it is worth watching. This will be displayed as the featured pick. "
@@ -39,12 +40,16 @@ DIGEST_SYSTEM_PROMPT = (
     "if it is a specific verified accolade such as reigning MVP or reigning DPOY. "
     "Never use vague references like 'their star' or 'the team's best player'. "
     "Where historical context is provided, reference it to make comparisons. "
-    "If a player is performing above or below their historical norm, say so explicitly."
+    "If a player is performing above or below their historical norm, say so explicitly. "
+    "If CLUTCH MOMENTS data is provided for a game, reference specific play-by-play events "
+    "in your narrative — name the player, the action, and the timing. "
+    "This data represents real game-deciding moments. Mention key events like missed free throws, turnovers, and big shots " 
+    "that costed or saved the game to give the reader an insight that the box score does not show. "
 )
 
 GAME_CARD_SYSTEM_PROMPT = (
     "Write exactly 2 sentences about this NBA game. "
-    "Sentence 1: how the game unfolded with specific reference to quarter momentum. "
+    "Sentence 1: how the game unfolded with specific reference to quarter momentum and player performance. "
     "Sentence 2: the one stat or moment a casual fan would miss from the final score alone. "
     "Be specific, no filler."
 )
@@ -164,6 +169,14 @@ def format_all_games_for_digest(games, upcoming_games=None, underrated_player=No
             lines.append(f"\nTOP PERFORMERS — {home['tricode']}:")
             for p in ps.get("home_players", [])[:5]:
                 lines.append(_format_player_row(p))
+
+        clutch_moments = game.get("clutch_moments", [])
+        if clutch_moments:
+            lines.append("\nCLUTCH MOMENTS (final 3 minutes):")
+            for ev in clutch_moments:
+                lines.append(
+                    f"  {ev['period']} {ev['clock']} — {ev['description']} | Score: {ev.get('score') or 'N/A'}"
+                )
 
         history = game.get("historical_context", [])
         if history:

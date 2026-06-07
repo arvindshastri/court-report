@@ -8,9 +8,11 @@ from nba_api.stats.endpoints import (
     BoxScoreTraditionalV3,
     LeagueGameFinder,
     PlayerCareerStats,
+    PlayByPlayV3,
 )
 from datetime import date, timedelta
 import time
+import re
 
 config = dotenv_values(Path(__file__).parent.parent / ".env")
 
@@ -180,6 +182,52 @@ def get_player_stats(game_id):
         "home_players": parse_players(data["homeTeam"]),
         "away_players": parse_players(data["awayTeam"]),
     }
+
+
+def get_play_by_play(game_id):
+    """
+    Fetch play-by-play events for a game and filter down to the "clutch window":
+    the final 3 minutes of the 4th quarter and any overtime periods.
+    Returns a chronologically sorted list of dicts with period, clock,
+    description, and score (e.g. "105-104" as away-home).
+    """
+    time.sleep(0.6)
+    pbp = PlayByPlayV3(game_id=game_id)
+    actions = pbp.get_dict().get("game", {}).get("actions", [])
+
+    def clock_seconds(clock_str):
+        m = re.match(r"PT(\d+)M([\d.]+)S", clock_str or "")
+        if not m:
+            return None
+        return int(m.group(1)) * 60 + float(m.group(2))
+
+    events = []
+    for a in actions:
+        period = a.get("period")
+        secs = clock_seconds(a.get("clock"))
+        if period is None or secs is None:
+            continue
+
+        in_clutch_window = (period == 4 and secs <= 180) or period > 4
+        if not in_clutch_window:
+            continue
+
+        score = None
+        score_home = a.get("scoreHome")
+        score_away = a.get("scoreAway")
+        if score_home not in (None, "") and score_away not in (None, ""):
+            score = f"{score_away}-{score_home}"
+
+        events.append({
+            "period":      period,
+            "clock":       f"{int(secs // 60)}:{int(secs % 60):02d}",
+            "description": a.get("description", ""),
+            "score":       score,
+        })
+
+    # `actions` is already in chronological order (ascending actionNumber),
+    # so the filtered list is sorted chronologically as-is.
+    return events
 
 
 def get_upcoming_games():
