@@ -139,6 +139,23 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;min-h
   border-top:var(--bwb) solid var(--ink);padding-top:22px;
 }
 
+.tts-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:34px;height:34px;margin-left:12px;vertical-align:middle;
+  background:var(--ink);color:var(--paper,#fff);border:none;border-radius:50%;
+  cursor:pointer;transition:opacity 0.15s;
+}
+.tts-btn:hover:not(:disabled){opacity:0.8}
+.tts-btn:disabled{cursor:default}
+.tts-btn-unavailable{background:#B8B0A2;color:#fff}
+.tts-btn-playing{background:var(--red);}
+.tts-spinner{
+  width:14px;height:14px;border:2px solid rgba(255,255,255,0.4);
+  border-top-color:#fff;border-radius:50%;
+  animation:tts-spin 0.7s linear infinite;
+}
+@keyframes tts-spin{to{transform:rotate(360deg)}}
+
 /* ── PLAYER CARDS ── */
 .players{margin-bottom:36px}
 .p-card{

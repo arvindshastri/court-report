@@ -17,6 +17,7 @@ The digest includes:
 - **By the Numbers** — 4 standalone stats that tell the story numbers alone can't
 - **Watch Next** — the one upcoming game worth watching with series context
 - **Ask Court Report** — chat interface for follow-up questions powered by RAG
+- **Read Aloud** — text-to-speech playback of the headline and summary via ElevenLabs
 
 ---
 
@@ -53,6 +54,35 @@ Results stored in Chroma for future RAG retrieval
 | **FastAPI** | Backend API serving digest as JSON with 12-hour caching |
 | **React + Vite** | Frontend dashboard displaying digest and chat interface |
 | **sentence-transformers** | all-MiniLM-L6-v2 embedding model for semantic search |
+| **ElevenLabs API** | Text-to-speech for the headline + summary "read aloud" button |
+
+---
+
+## Text-to-Speech
+
+Clicking the speaker icon next to the headline sends only the `story_headline` + `story_body` text (not the full digest) to ElevenLabs and plays back the resulting audio. If the ElevenLabs API call fails for any reason (bad/missing key, exhausted credits, network error), the button greys out and disables itself with a "TTS unavailable" tooltip instead of showing an error.
+
+**Voice:** [`TX3LPaxmHKxFdv7VOQHJ`](https://elevenlabs.io) — **Liam, "Energetic, Social Media Creator."** Selected from the free-tier shared voice library (`GET /v1/voices`), American accent, labeled `energetic` / `confident`. An earlier pick (Daniel, "Steady Broadcaster" — British, `formal`) read as an authoritative newsreader but too flat/monotone for sports-analyst energy; Liam's base character better suits an enthusiastic, fast-talking analyst read.
+
+To push the energy further, `voice_settings` are tuned away from the defaults: lower `stability` (more pitch/pace variation instead of a flat read), higher `style` (exaggerates the voice's inherent character), and `speed` above 1.0 for a brisker pace. See `ELEVENLABS_VOICE_SETTINGS` in [`pipeline/tts.py`](pipeline/tts.py). Note Flash v2.5 has a narrower expressive range than the pricier Multilingual/Turbo models, so these settings are close to the practical ceiling for this tier.
+
+**Model:** `eleven_flash_v2_5` — ElevenLabs' Flash tier, chosen over Multilingual v2 because it's both cheaper per character and lower latency. Since only the headline + summary are sent (not the full digest), per-request character counts stay small regardless of model choice.
+
+**Cost estimate:** A tested headline + summary pair (from the June 13, 2026 Knicks–Spurs game) came out to:
+
+- Headline: 171 characters
+- Summary: 827 characters
+- **Combined: 999 characters per read**
+
+ElevenLabs bills Flash-tier requests at roughly 0.5 credits/character, so a typical read costs **~500 credits**. The free tier includes 10,000 credits/month — enough for roughly 20 reads/month.
+
+**Setup:** add your key to `.env`:
+
+```
+ELEVENLABS_API_KEY=your_key_here
+```
+
+Get a key from ElevenLabs under **Creative Platform → API Keys**, with `Text to Speech: Access` and `Voices: Read` permissions.
 
 ---
 
@@ -84,10 +114,11 @@ venv\Scripts\activate  # Windows
 pip install -r requirements.txt
 ```
 
-Add your API key to `.env`:
+Add your API keys to `.env`:
 
 ```
 ANTHROPIC_API_KEY=your_key_here
+ELEVENLABS_API_KEY=your_key_here
 ```
 
 Seed season averages (run once):

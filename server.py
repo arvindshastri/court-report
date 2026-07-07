@@ -10,12 +10,14 @@ from datetime import datetime, timedelta
 
 sys.path.insert(0, str(Path(__file__).parent))
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from pipeline.pipeline import run_pipeline
 from pipeline.chroma_store import get_vectorstore
 from pipeline.claude_recap import generate_chat_response
+from pipeline.tts import synthesize_speech, TTSError
 
 logger = logging.getLogger(__name__)
 
@@ -302,3 +304,32 @@ def digest():
         print(f"[cache] Could not write cache: {e}")
 
     return result
+
+
+@app.post("/api/digest/audio")
+def digest_audio():
+    """Synthesize speech for the current digest's headline + summary only
+    (not the full digest) and stream back the resulting MP3."""
+    if not CACHE_PATH.exists():
+        return JSONResponse({"error": "No digest available yet"}, status_code=404)
+
+    try:
+        cached = json.loads(CACHE_PATH.read_text(encoding="utf-8"))
+    except Exception as e:
+        logger.error(f"[tts] Failed to read digest cache: {e}")
+        return JSONResponse({"error": "Could not read digest"}, status_code=500)
+
+    headline = cached.get("story_headline", "")
+    body = cached.get("story_body", "")
+    text = f"{headline} {body}".strip()
+
+    if not text:
+        return JSONResponse({"error": "No headline or summary to read"}, status_code=404)
+
+    try:
+        audio_bytes = synthesize_speech(text)
+    except TTSError as e:
+        logger.error(f"[tts] Synthesis failed: {e}")
+        return JSONResponse({"error": "TTS unavailable"}, status_code=503)
+
+    return Response(content=audio_bytes, media_type="audio/mpeg")
